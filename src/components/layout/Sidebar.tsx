@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Drawer,
   List,
@@ -6,8 +6,10 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  useMediaQuery,
   styled,
+  IconButton,
+  AppBar,
+  Toolbar,
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -17,6 +19,7 @@ import {
   Assessment as ReportsIcon,
   Settings as SettingsIcon,
   Person as ProfileIcon,
+  Menu as MenuIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -29,11 +32,16 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: drawerWidth,
     boxSizing: 'border-box',
-    marginTop: 64, // Height of the navbar
   },
-  [theme.breakpoints.down('sm')]: {
-    display: 'none',
-  },
+}));
+
+const MenuButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+  color: theme.palette.primary.contrastText,
+}));
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 const navigationItems = [
@@ -48,30 +56,54 @@ const navigationItems = [
 
 const Sidebar: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
   return (
-    <StyledDrawer
-      variant={isMobile ? 'temporary' : 'permanent'}
-      anchor="left"
-    >
-      <List>
-        {navigationItems.map((item) => (
-          <ListItem
-            button
-            key={item.path}
-            selected={location.pathname === item.path}
-            onClick={() => navigate(item.path)}
+    <>
+      <StyledAppBar position="fixed">
+        <Toolbar>
+          <MenuButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={t(item.translationKey)} />
-          </ListItem>
-        ))}
-      </List>
-    </StyledDrawer>
+            <MenuIcon />
+          </MenuButton>
+        </Toolbar>
+      </StyledAppBar>
+      <StyledDrawer
+        variant="temporary"
+        anchor="left"
+        open={drawerOpen}
+        onClose={handleDrawerToggle}
+      >
+        <Toolbar /> {/* Spacer for AppBar */}
+        <List>
+          {navigationItems.map((item) => (
+            <ListItem
+              button
+              key={item.path}
+              selected={location.pathname === item.path}
+              onClick={() => {
+                navigate(item.path);
+                handleDrawerToggle();
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={t(item.translationKey)} />
+            </ListItem>
+          ))}
+        </List>
+      </StyledDrawer>
+    </>
   );
 };
 
