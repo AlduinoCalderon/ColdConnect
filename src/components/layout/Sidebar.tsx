@@ -10,6 +10,7 @@ import {
   IconButton,
   AppBar,
   Toolbar,
+  Collapse,
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -20,6 +21,13 @@ import {
   Settings as SettingsIcon,
   Person as ProfileIcon,
   Menu as MenuIcon,
+  People as UsersIcon,
+  Storage as StorageUnitIcon,
+  Payment as PaymentIcon,
+  Build as MaintenanceIcon,
+  Notifications as NotificationIcon,
+  ExpandLess,
+  ExpandMore,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -47,8 +55,13 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 const navigationItems = [
   { path: '/', icon: <HomeIcon />, translationKey: 'navigation.home' },
   { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'navigation.warehouses' },
+  { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'navigation.storageUnits' },
   { path: '/bookings', icon: <BookingIcon />, translationKey: 'navigation.bookings' },
+  { path: '/payments', icon: <PaymentIcon />, translationKey: 'navigation.payments' },
+  { path: '/users', icon: <UsersIcon />, translationKey: 'navigation.users' },
   { path: '/sensors', icon: <SensorsIcon />, translationKey: 'navigation.sensors' },
+  { path: '/maintenance', icon: <MaintenanceIcon />, translationKey: 'navigation.maintenance' },
+  { path: '/notifications', icon: <NotificationIcon />, translationKey: 'navigation.notifications' },
   { path: '/reports', icon: <ReportsIcon />, translationKey: 'navigation.reports' },
   { path: '/settings', icon: <SettingsIcon />, translationKey: 'navigation.settings' },
   { path: '/profile', icon: <ProfileIcon />, translationKey: 'navigation.profile' },

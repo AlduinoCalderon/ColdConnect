@@ -15,8 +15,13 @@ import Sidebar from './components/layout/Sidebar';
 // Page components
 import Home from './pages/Home';
 import Warehouses from './pages/Warehouses';
+import StorageUnits from './pages/StorageUnits';
 import Bookings from './pages/Bookings';
+import Payments from './pages/Payments';
+import Users from './pages/Users';
 import Sensors from './pages/Sensors';
+import Maintenance from './pages/Maintenance';
+import Notifications from './pages/Notifications';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
@@ -35,8 +40,13 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/warehouses" element={<Warehouses />} />
+            <Route path="/storage-units" element={<StorageUnits />} />
             <Route path="/bookings" element={<Bookings />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/users" element={<Users />} />
             <Route path="/sensors" element={<Sensors />} />
+            <Route path="/maintenance" element={<Maintenance />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile />} />
