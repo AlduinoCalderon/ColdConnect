@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, styled } from '@mui/material';
+import Navbar from './Navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ const MainContent = styled(Box)(({ theme }) => ({
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <LayoutContainer>
-      {children}
+      <Navbar />
       <MainContent>
         {children}
       </MainContent>

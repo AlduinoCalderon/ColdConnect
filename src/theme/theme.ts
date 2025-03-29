@@ -4,17 +4,17 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#1c282f', // Gunmetal
+      light: '#516474', // Payne's Gray
+      dark: '#88aae5', // Vista Blue
     },
     secondary: {
-      main: '#9c27b0',
-      light: '#ba68c8',
-      dark: '#7b1fa2',
+      main: '#88aae5', // Vista Blue
+      light: '#f6f8fa', // Anti-Flash White
+      dark: '#3d5766', // Darker Gunmetal
     },
     background: {
-      default: '#f5f5f5',
+      default: '#f6f8fa', // Anti-Flash White
       paper: '#ffffff',
     },
   },
@@ -48,18 +48,18 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#90caf9',
-      light: '#e3f2fd',
-      dark: '#42a5f5',
+      main: '#1c282f', // Gunmetal
+      light: '#516474', // Payne's Gray
+      dark: '#88aae5', // Vista Blue
     },
     secondary: {
-      main: '#ce93d8',
-      light: '#f3e5f5',
-      dark: '#ab47bc',
+      main: '#88aae5', // Vista Blue
+      light: '#f6f8fa', // Anti-Flash White
+      dark: '#3d5766', // Darker Gunmetal
     },
     background: {
-      default: '#121212',
-      paper: '#1e1e1e',
+      default: '#06080a', // Dark Gunmetal
+      paper: '#11181d', // Slightly Lighter Gunmetal
     },
   },
   typography: {
@@ -86,4 +86,4 @@ export const darkTheme = createTheme({
       },
     },
   },
-}); 
+});

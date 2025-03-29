@@ -22,15 +22,16 @@ import {
   Divider,
 } from '@mui/material';
 import {
-  Notifications as NotificationsIcon,
+  Notifications as NotificationIcon,
+  Warning as AlertIcon,
+  Payment as PaymentIcon,
+  Build as MaintenanceIcon,
+  EventNote as BookingIcon,
+  CheckCircle as ReadIcon,
   Delete as DeleteIcon,
-  CheckCircle as CheckCircleIcon,
-  Warning as WarningIcon,
-  Info as InfoIcon,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { Notification } from '../types';
-import { notificationService } from '../services/notificationService';
+import { Notification, notificationService } from '../services/notificationService';
 
 const Notifications: React.FC = () => {
   const { t } = useTranslation();
@@ -92,15 +93,15 @@ const Notifications: React.FC = () => {
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
       case 'alert':
-        return <WarningIcon color="error" />;
+        return <AlertIcon color="error" />;
       case 'payment':
-        return <InfoIcon color="primary" />;
+        return <PaymentIcon color="primary" />;
       case 'maintenance':
-        return <WarningIcon color="warning" />;
+        return <MaintenanceIcon color="warning" />;
       case 'booking':
-        return <InfoIcon color="info" />;
+        return <BookingIcon color="info" />;
       default:
-        return <NotificationsIcon />;
+        return <NotificationIcon />;
     }
   };
 
@@ -139,7 +140,7 @@ const Notifications: React.FC = () => {
           <Button
             variant="outlined"
             color="primary"
-            startIcon={<CheckCircleIcon />}
+            startIcon={<ReadIcon />}
             onClick={handleMarkAllAsRead}
           >
             {t('notification.markAllAsRead')}
@@ -208,7 +209,7 @@ const Notifications: React.FC = () => {
                       onClick={() => handleMarkAsRead(notification.notificationId)}
                       sx={{ mr: 1 }}
                     >
-                      <CheckCircleIcon />
+                      <ReadIcon />
                     </IconButton>
                   )}
                   <IconButton

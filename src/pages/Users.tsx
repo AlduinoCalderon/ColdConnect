@@ -23,8 +23,7 @@ import {
 } from '@mui/material';
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { User } from '../types';
-import { userService } from '../services/userService';
+import { User, userService } from '../services/userService';
 
 const Users: React.FC = () => {
   const { t } = useTranslation();
