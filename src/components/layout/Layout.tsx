@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, styled } from '@mui/material';
 import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <LayoutContainer>
       <Navbar />
+      <Sidebar />
       <MainContent>
         {children}
       </MainContent>

@@ -26,6 +26,17 @@ const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
 
+  const handleThemeToggle = () => {
+    dispatch(toggleTheme());
+  };
+
+  const handleLanguageChange = () => {
+    // Implement language change logic here
+    // For example, you can toggle between 'en' and 'es'
+    // const newLang = i18n.language === 'en' ? 'es' : 'en';
+    // i18n.changeLanguage(newLang);
+  };
+
   return (
     <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
       <Toolbar>
@@ -47,7 +58,7 @@ const Navbar: React.FC = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <IconButton
             color="inherit"
-            onClick={() => dispatch(toggleTheme())}
+            onClick={handleThemeToggle}
             title={themeMode === 'light' ? t('settings.darkMode') : t('settings.lightMode')}
           >
             {themeMode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
@@ -55,7 +66,7 @@ const Navbar: React.FC = () => {
 
           <IconButton
             color="inherit"
-            onClick={() => {/* TODO: Implement language selector */}}
+            onClick={handleLanguageChange}
             title={t('settings.language')}
           >
             <LanguageIcon />

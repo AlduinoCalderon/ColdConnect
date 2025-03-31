@@ -28,9 +28,15 @@ import {
   Notifications as NotificationIcon,
   ExpandLess,
   ExpandMore,
+  Brightness4 as DarkModeIcon,
+  Brightness7 as LightModeIcon,
+  Language as LanguageIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../../store/slices/themeSlice';
+import { RootState } from '../../store/store';
 
 const drawerWidth = 240;
 
@@ -52,8 +58,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
 }));
 
-
-// AQUI se le mueve a los nombres de la sidebar
 const navigationItems = [
   { path: '/', icon: <HomeIcon />, translationKey: 'Home' },
   { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'Warehouses' },
@@ -74,10 +78,23 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
+  };
+
+  const handleThemeToggle = () => {
+    dispatch(toggleTheme());
+  };
+
+  const handleLanguageChange = () => {
+    // Implement language change logic here
+    // For example, you can toggle between 'en' and 'es'
+    // const newLang = i18n.language === 'en' ? 'es' : 'en';
+    // i18n.changeLanguage(newLang);
   };
 
   return (
@@ -116,6 +133,18 @@ const Sidebar: React.FC = () => {
               <ListItemText primary={t(item.translationKey)} />
             </ListItem>
           ))}
+          <ListItem button onClick={handleThemeToggle}>
+            <ListItemIcon>
+              {themeMode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+            </ListItemIcon>
+            <ListItemText primary={t('Toggle Theme')} />
+          </ListItem>
+          <ListItem button onClick={handleLanguageChange}>
+            <ListItemIcon>
+              <LanguageIcon />
+            </ListItemIcon>
+            <ListItemText primary={t('settings.language')} />
+          </ListItem>
         </List>
       </StyledDrawer>
     </>

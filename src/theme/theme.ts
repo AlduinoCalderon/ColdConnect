@@ -48,7 +48,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#1c282f', // Gunmetal
+      main: '#374652', // Updated to #374652 (new color)
       light: '#516474', // Payne's Gray
       dark: '#88aae5', // Vista Blue
     },
