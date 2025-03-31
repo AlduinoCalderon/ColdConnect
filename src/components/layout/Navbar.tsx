@@ -7,6 +7,7 @@ import {
   Box,
   useTheme,
   useMediaQuery,
+  Tooltip,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -18,11 +19,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { toggleTheme } from '../../store/slices/themeSlice';
+import i18n from '../../i18n/i18n';
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { t } = useTranslation();
+  const { t, i18n: i18nInstance } = useTranslation();
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
 
@@ -31,10 +33,8 @@ const Navbar: React.FC = () => {
   };
 
   const handleLanguageChange = () => {
-    // Implement language change logic here
-    // For example, you can toggle between 'en' and 'es'
-    // const newLang = i18n.language === 'en' ? 'es' : 'en';
-    // i18n.changeLanguage(newLang);
+    const newLang = i18nInstance.language === 'en' ? 'es' : 'en';
+    i18nInstance.changeLanguage(newLang);
   };
 
   return (
@@ -56,21 +56,23 @@ const Navbar: React.FC = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <IconButton
-            color="inherit"
-            onClick={handleThemeToggle}
-            title={themeMode === 'light' ? t('settings.darkMode') : t('settings.lightMode')}
-          >
-            {themeMode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
-          </IconButton>
+          <Tooltip title={themeMode === 'light' ? t('settings.darkMode') : t('settings.lightMode')}>
+            <IconButton
+              color="inherit"
+              onClick={handleThemeToggle}
+            >
+              {themeMode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+          </Tooltip>
 
-          <IconButton
-            color="inherit"
-            onClick={handleLanguageChange}
-            title={t('settings.language')}
-          >
-            <LanguageIcon />
-          </IconButton>
+          <Tooltip title={`${t('settings.language')} (${i18nInstance.language.toUpperCase()})`}>
+            <IconButton
+              color="inherit"
+              onClick={handleLanguageChange}
+            >
+              <LanguageIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Toolbar>
     </AppBar>

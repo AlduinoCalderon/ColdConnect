@@ -58,7 +58,7 @@ const Home: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
+    <Box sx={{ flexGrow: 1, p: 3, position: 'relative' }}>
       <Typography variant="h4" gutterBottom>
         {t('common.welcome')}
       </Typography>

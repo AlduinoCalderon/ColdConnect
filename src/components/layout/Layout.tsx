@@ -18,7 +18,7 @@ const MainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
   marginTop: 64, // Height of the navbar
-  marginLeft: 240, // Width of the sidebar
+  marginLeft: 0, // Width of the sidebar
   [theme.breakpoints.down('sm')]: {
     marginLeft: 0,
   },

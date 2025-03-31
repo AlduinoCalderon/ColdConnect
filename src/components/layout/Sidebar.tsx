@@ -10,7 +10,6 @@ import {
   IconButton,
   AppBar,
   Toolbar,
-  Collapse,
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -26,8 +25,6 @@ import {
   Payment as PaymentIcon,
   Build as MaintenanceIcon,
   Notifications as NotificationIcon,
-  ExpandLess,
-  ExpandMore,
   Brightness4 as DarkModeIcon,
   Brightness7 as LightModeIcon,
   Language as LanguageIcon,
@@ -38,7 +35,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../../store/slices/themeSlice';
 import { RootState } from '../../store/store';
 
-const drawerWidth = 240;
+const drawerWidth = '15rem'; // Use rem for responsive design
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   width: drawerWidth,
@@ -92,9 +89,6 @@ const Sidebar: React.FC = () => {
 
   const handleLanguageChange = () => {
     // Implement language change logic here
-    // For example, you can toggle between 'en' and 'es'
-    // const newLang = i18n.language === 'en' ? 'es' : 'en';
-    // i18n.changeLanguage(newLang);
   };
 
   return (
