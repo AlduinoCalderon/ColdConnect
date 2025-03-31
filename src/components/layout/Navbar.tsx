@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 2 }}>
       <Toolbar>
         {isMobile && (
           <IconButton
