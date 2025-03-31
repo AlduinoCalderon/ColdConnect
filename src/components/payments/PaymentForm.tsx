@@ -67,6 +67,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ payment, onSubmit }) => {
           onChange={handleChange}
           margin="dense"
         >
+            
           <MenuItem value="credit_card">Credit Card</MenuItem>
           <MenuItem value="bank_transfer">Bank Transfer</MenuItem>
           <MenuItem value="paypal">PayPal</MenuItem>
