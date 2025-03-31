@@ -23,7 +23,8 @@ import {
 } from '@mui/material';
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { Maintenance, maintenanceService } from '../services/maintenanceService';
+import { Maintenance } from '../types';
+import { maintenanceService } from '../services/maintenanceService';
 
 const MaintenancePage: React.FC = () => {
   const { t } = useTranslation();

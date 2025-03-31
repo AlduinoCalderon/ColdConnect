@@ -31,7 +31,8 @@ import {
   Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { Notification, notificationService } from '../services/notificationService';
+import { Notification } from '../types';
+import { notificationService } from '../services/notificationService';
 
 const Notifications: React.FC = () => {
   const { t } = useTranslation();
