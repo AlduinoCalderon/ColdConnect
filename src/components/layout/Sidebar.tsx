@@ -9,7 +9,6 @@ import {
   styled,
   IconButton,
   AppBar,
-  Toolbar,
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -38,21 +37,22 @@ import { RootState } from '../../store/store';
 const drawerWidth = '15rem'; // Use rem for responsive design
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  '& .MuiDrawer-paper': {
-    width: drawerWidth,
-    boxSizing: 'border-box',
-  },
+  zIndex: theme.zIndex.drawer + 1, // Sidebar is always on top
 }));
 
 const MenuButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(2),
   color: theme.palette.primary.contrastText,
+  position: 'fixed', // This makes the button stay on the screen even while scrolling
+  top: 16, // Adjust as needed
+  left: 16, // Adjust as needed
+  zIndex: 1301, // Higher zIndex to ensure it's on top
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
+  position: 'relative', // Ensures that the AppBar is correctly positioned
+  zIndex: theme.zIndex.drawer + 2, // Ensure it's below the menu button and above other elements
+  boxShadow: 'none', // Remove box shadow if not needed
 }));
 
 const navigationItems = [
@@ -94,16 +94,14 @@ const Sidebar: React.FC = () => {
   return (
     <>
       <StyledAppBar position="fixed">
-        <Toolbar>
-          <MenuButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-          >
-            <MenuIcon />
-          </MenuButton>
-        </Toolbar>
+        <MenuButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+        >
+          <MenuIcon />
+        </MenuButton>
       </StyledAppBar>
       <StyledDrawer
         variant="temporary"
@@ -111,7 +109,6 @@ const Sidebar: React.FC = () => {
         open={drawerOpen}
         onClose={handleDrawerToggle}
       >
-        <Toolbar /> {/* Spacer for AppBar */}
         <List>
           {navigationItems.map((item) => (
             <ListItem
@@ -145,4 +142,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

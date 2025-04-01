@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
 
   return (
     <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 2 }}>
-      <Toolbar>
+      <Toolbar sx={{ minHeight: 64 }}>
         {isMobile && (
           <IconButton
             color="inherit"
