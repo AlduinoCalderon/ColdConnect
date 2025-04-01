@@ -14,6 +14,7 @@ import Sidebar from './components/layout/Sidebar';
 
 // Page components
 import Home from './pages/Home';
+import HomeOwner from './pages/HomeOwner';
 import Warehouses from './pages/Warehouses';
 import StorageUnits from './pages/StorageUnits';
 import Bookings from './pages/Bookings';
@@ -25,6 +26,7 @@ import Notifications from './pages/Notifications';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
+import WarehouseDetails from './pages/WarehouseDetails';
 
 const App: React.FC = () => {
   const themeMode = useSelector((state: RootState) => state.theme.mode);
@@ -39,7 +41,9 @@ const App: React.FC = () => {
           <Sidebar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home-owner" element={<HomeOwner />} />
             <Route path="/warehouses" element={<Warehouses />} />
+            <Route path="/warehouses/:id" element={<WarehouseDetails />} />
             <Route path="/storage-units" element={<StorageUnits />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/payments" element={<Payments />} />
