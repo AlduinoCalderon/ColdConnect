@@ -51,9 +51,19 @@ const Navbar: React.FC = () => {
           </IconButton>
         )}
         
-        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          ColdStorageHub
-        </Typography>
+        <Typography
+  variant="h6"
+  noWrap
+  component="div"
+  sx={{
+    flexGrow: 1, // Keeps the text aligned properly
+    marginLeft: { xs: "0px", sm: "240px" }, // Adds left margin 0px on mobile, 240px on larger screen
+    transition: "margin-left 0.3s ease-in-out",
+  }}
+>
+  Cold Connect
+</Typography>
+
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Tooltip title={themeMode === 'light' ? t('settings.darkMode') : t('settings.lightMode')}>

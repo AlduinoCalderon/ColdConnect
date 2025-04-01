@@ -17,6 +17,8 @@ const LayoutContainer = styled(Box)(({ theme }) => ({
 const MainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
+  
+
   marginTop: 64, // Height of the navbar
   marginLeft: 0, // Width of the sidebar, 0 so it doesn't cover the page behind it
   [theme.breakpoints.down('sm')]: {
