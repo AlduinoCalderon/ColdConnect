@@ -70,6 +70,7 @@ const navigationItems = [
   { path: '/profile', icon: <ProfileIcon />, translationKey: 'Profile' },
 ];
 
+//comentario para hacer merge
 const Sidebar: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
