@@ -20,6 +20,11 @@ export interface Warehouse {
     };
   };
   amenities: string[];
+  totalUnits: number;
+  availableUnits: number;
+  occupancyRate: number;
+  averageTemperature: number;
+  averageHumidity: number;
 }
 
 const WAREHOUSE_ENDPOINT = '/warehouses';
