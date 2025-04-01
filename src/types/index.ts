@@ -98,4 +98,15 @@ export interface Notification {
   message: string;
   isRead: boolean;
   createdAt: string;
+}
+
+export interface Warehouse {
+  warehouseId: number;
+  name: string;
+  address: string;
+  occupation: number | string;
+  temperature: number | string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
 } 
