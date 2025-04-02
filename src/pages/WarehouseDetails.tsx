@@ -12,6 +12,7 @@ const WarehouseDetails: React.FC = () => {
   const [warehouse, setWarehouse] = useState<Warehouse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
 
   useEffect(() => {
@@ -20,7 +21,11 @@ const WarehouseDetails: React.FC = () => {
         const data = await warehouseService.getById(Number(id));
         setWarehouse(data);
         // Fetch associated storage units
-        const units = await storageUnitService.getByWarehouseId(Number(id));
+        const response = await fetch(`https://coldstoragehub.onrender.com/API/storage-units/wh/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch storage units');
+        }
+        const units = await response.json();
         setStorageUnits(units);
       } catch (err) {
         console.error('Error fetching warehouse:', err);
