@@ -26,7 +26,7 @@ export const storageUnitService = {
 
   getByWarehouseId: async (warehouseId: number) => {
     try {
-      const response = await getAll<StorageUnit[]>(`${STORAGE_UNIT_ENDPOINT}/warehouse/${warehouseId}`);
+      const response = await getAll<StorageUnit[]>(`${STORAGE_UNIT_ENDPOINT}`); //TODO asociar al warehouseId de la warehouse pedida
       return response.data;
     } catch (error) {
       console.error('Error fetching storage units by warehouse:', error);
