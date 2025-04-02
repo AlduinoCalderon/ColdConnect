@@ -22,8 +22,8 @@ const WarehouseCard: React.FC<WarehouseCardProps> = ({ warehouse }) => {
         <Box>
           <Typography variant="h6">{warehouse.name}</Typography>
           <Typography variant="body2">Address: {warehouse.address}</Typography>
-          <Typography variant="body2">Occupation: {warehouse.occupation || 'Information not available'}</Typography>
-          <Typography variant="body2">Temperature: {warehouse.temperature || 'Information not available'}</Typography>
+          <Typography variant="body2">Occupation: {warehouse.occupation }</Typography>
+          <Typography variant="body2">Temperature: {warehouse.temperature }</Typography>
         </Box>
       </CardContent>
     </Card>
