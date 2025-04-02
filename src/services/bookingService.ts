@@ -1,6 +1,8 @@
 import { create, getAll, getById, update, remove } from './api';
 import { Booking, BookingUnit } from '../types';
 
+
+// Hace una instancia, y luego llama POST, GET, PUT, DELETE
 const BOOKING_ENDPOINT = '/bookings';
 
 export const bookingService = {
