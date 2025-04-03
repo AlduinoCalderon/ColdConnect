@@ -86,16 +86,20 @@ const WarehouseHeader: React.FC<{ warehouse: Warehouse }> = ({ warehouse }) => {
 };
 
 const StorageUnitCard: React.FC<{ unit: StorageUnit }> = ({ unit }) => {
-  const getStatusColor = (status: StorageUnit['status']) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
-      case 'available':
+      case 'active':
         return 'success';
-      case 'occupied':
-        return 'primary';
       case 'maintenance':
         return 'warning';
-      case 'reserved':
+      case 'closed':
+        return 'error';
+      case 'pending':
+        return 'warning';
+      case 'confirmed':
         return 'info';
+      case 'cancelled':
+        return 'error';
       default:
         return 'default';
     }

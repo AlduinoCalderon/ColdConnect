@@ -25,6 +25,7 @@ import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/ico
 import { useTranslation } from 'react-i18next';
 import { StorageUnit } from '../types';
 import { storageUnitService } from '../services/storageUnitService';
+import { useTheme } from '@mui/material/styles';
 
 const StorageUnits: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +34,7 @@ const StorageUnits: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState<StorageUnit | null>(null);
+  const theme = useTheme();
 
   const fetchUnits = async () => {
     try {
@@ -81,7 +83,7 @@ const StorageUnits: React.FC = () => {
       case 'maintenance':
         return 'warning';
       case 'reserved':
-        return 'secondary';
+        return 'warning';
       default:
         return 'default';
     }
@@ -117,23 +119,29 @@ const StorageUnits: React.FC = () => {
         </Alert>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>{t('storageUnit.name')}</TableCell>
-              <TableCell>{t('storageUnit.warehouse')}</TableCell>
-              <TableCell>{t('storageUnit.dimensions')}</TableCell>
-              <TableCell>{t('storageUnit.temperature')}</TableCell>
-              <TableCell>{t('storageUnit.humidity')}</TableCell>
-              <TableCell>{t('storageUnit.cost')}</TableCell>
-              <TableCell>{t('storageUnit.status')}</TableCell>
-              <TableCell align="right">{t('common.actions')}</TableCell>
+            <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.name')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.warehouse')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.dimensions')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.temperature')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.humidity')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.cost')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.status')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {units.map((unit) => (
-              <TableRow key={unit.unitId}>
+            {units.map((unit, index) => (
+              <TableRow 
+                key={unit.unitId} 
+                sx={{ 
+                  backgroundColor: index % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper, 
+                  '&:hover': { backgroundColor: theme.palette.action.selected } 
+                }}
+              >
                 <TableCell>{unit.name}</TableCell>
                 <TableCell>{unit.warehouseId}</TableCell>
                 <TableCell>
