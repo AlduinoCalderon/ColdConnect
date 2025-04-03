@@ -114,11 +114,7 @@ const Bookings: React.FC = () => {
                         booking.status === 'confirmed' ? theme.palette.info.light :
                         booking.status === 'cancelled' ? theme.palette.error.light :
                         theme.palette.success.light,
-                      color: 
-                        booking.status === 'pending' ? theme.palette.warning.dark :
-                        booking.status === 'confirmed' ? theme.palette.info.dark :
-                        booking.status === 'cancelled' ? theme.palette.error.dark :
-                        theme.palette.success.dark,
+                      
                       textTransform: 'capitalize',
                       fontWeight: 'medium'
                     }}

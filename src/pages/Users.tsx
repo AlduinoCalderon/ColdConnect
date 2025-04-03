@@ -72,13 +72,17 @@ const Users: React.FC = () => {
     }
   };
 
-  const getStatusColor = (status: User['status']) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
         return 'success';
       case 'inactive':
-        return 'default';
-      case 'suspended':
+        return 'error';
+      case 'pending':
+        return 'warning';
+      case 'confirmed':
+        return 'info';
+      case 'cancelled':
         return 'error';
       default:
         return 'default';

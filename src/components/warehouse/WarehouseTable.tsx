@@ -18,6 +18,7 @@ import {
 } from '@mui/icons-material';
 import { Warehouse } from '../../services/warehouseService';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material/styles';
 
 interface WarehouseTableProps {
   warehouses: Warehouse[];
@@ -31,6 +32,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
   onDelete,
 }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -39,6 +41,12 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
       case 'maintenance':
         return 'warning';
       case 'closed':
+        return 'error';
+      case 'pending':
+        return 'warning';
+      case 'confirmed':
+        return 'info';
+      case 'cancelled':
         return 'error';
       default:
         return 'default';
@@ -50,21 +58,27 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ mt: 3 }}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>{t('warehouse.name')}</TableCell>
-            <TableCell>{t('warehouse.status')}</TableCell>
-            <TableCell>{t('warehouse.address')}</TableCell>
-            <TableCell>{t('warehouse.amenities')}</TableCell>
-            <TableCell>{t('warehouse.created')}</TableCell>
-            <TableCell align="right">{t('common.actions')}</TableCell>
+          <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.name')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.status')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.address')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.amenities')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.created')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {warehouses.map((warehouse) => (
-            <TableRow key={warehouse.warehouseId}>
+          {warehouses.map((warehouse, index) => (
+            <TableRow 
+              key={warehouse.warehouseId} 
+              sx={{ 
+                backgroundColor: index % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper, 
+                '&:hover': { backgroundColor: theme.palette.action.selected } 
+              }}
+            >
               <TableCell>{warehouse.name}</TableCell>
               <TableCell>
                 <Chip
@@ -88,17 +102,16 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
               <TableCell>{formatDate(warehouse.createdAt)}</TableCell>
               <TableCell align="right">
                 <IconButton
-                  size="small"
+                  color="primary"
                   onClick={() => onEdit?.(warehouse)}
-                  title={t('common.edit')}
+                  size="small"
                 >
                   <EditIcon />
                 </IconButton>
                 <IconButton
-                  size="small"
                   color="error"
                   onClick={() => onDelete?.(warehouse.warehouseId)}
-                  title={t('common.delete')}
+                  size="small"
                 >
                   <DeleteIcon />
                 </IconButton>
