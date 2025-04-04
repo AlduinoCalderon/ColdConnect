@@ -19,7 +19,7 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Chip,
+  useTheme,
 } from '@mui/material';
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +28,7 @@ import { userService } from '../services/userService';
 
 const Users: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [users, setUsers] = useState<User[]>([]);   //longitud dada por Use
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -128,37 +129,73 @@ const Users: React.FC = () => {
         </Alert>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>{t('user.name')}</TableCell>
-              <TableCell>{t('user.email')}</TableCell>
-              <TableCell>{t('user.phone')}</TableCell>
-              <TableCell>{t('user.role')}</TableCell>
-              <TableCell>{t('user.status')}</TableCell>
-              <TableCell align="right">{t('common.actions')}</TableCell>
+            <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('user.name')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('user.email')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('user.phone')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('user.role')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('user.status')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.userId}>
+            {users.map((user, index) => (
+              <TableRow 
+                key={user.userId}
+                sx={{ 
+                  backgroundColor: index % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper,
+                  '&:hover': { backgroundColor: theme.palette.action.selected }
+                }}
+              >
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.phone || '-'}</TableCell>
                 <TableCell>
-                  <Chip
-                    label={t(`user.roles.${user.role}`)}
-                    color={getRoleColor(user.role)}
-                    size="small"
-                  />
+                  <Box 
+                    sx={{ 
+                      display: 'inline-block',
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                      backgroundColor: 
+                        user.role === 'admin' ? theme.palette.error.light :
+                        user.role === 'owner' ? theme.palette.warning.light :
+                        theme.palette.info.light,
+                      //color: 
+                        //user.role === 'admin' ? theme.palette.error.dark :
+                        //user.role === 'owner' ? theme.palette.warning.dark :
+                        //theme.palette.info.dark,
+                      textTransform: 'capitalize',
+                      fontWeight: 'medium'
+                    }}
+                  >
+                    {t(`user.roles.${user.role}`)}
+                  </Box>
                 </TableCell>
                 <TableCell>
-                  <Chip
-                    label={t(`user.statusTypes.${user.status}`)}
-                    color={getStatusColor(user.status)}
-                    size="small"
-                  />
+                  <Box 
+                    sx={{ 
+                      display: 'inline-block',
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                      backgroundColor: 
+                        user.status === 'active' ? theme.palette.success.light :
+                        user.status === 'inactive' ? theme.palette.grey[300] :
+                        theme.palette.error.light,
+                      color: 
+                        user.status === 'active' ? theme.palette.success.dark :
+                        user.status === 'inactive' ? theme.palette.grey[700] :
+                        theme.palette.error.dark,
+                      textTransform: 'capitalize',
+                      fontWeight: 'medium'
+                    }}
+                  >
+                    {t(`user.statusTypes.${user.status}`)}
+                  </Box>
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
