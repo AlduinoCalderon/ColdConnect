@@ -72,14 +72,14 @@ const MaintenancePage: React.FC = () => {
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: Maintenance['status']) => {
     switch (status) {
       case 'completed':
         return 'success';
       case 'in_progress':
-        return 'info';
-      case 'pending':
         return 'warning';
+      case 'scheduled':
+        return 'info';
       case 'cancelled':
         return 'error';
       default:
