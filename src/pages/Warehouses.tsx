@@ -24,7 +24,7 @@ const Warehouses: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | null>(null);
+  const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | undefined>(undefined);
 
   const fetchWarehouses = async () => {
     try {
@@ -45,7 +45,7 @@ const Warehouses: React.FC = () => {
   }, []);
 
   const handleCreate = () => {
-    setSelectedWarehouse(null);
+    setSelectedWarehouse(undefined);
     setOpenDialog(true);
   };
 
@@ -120,7 +120,7 @@ const Warehouses: React.FC = () => {
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>
-          {selectedWarehouse ? t('Edit Existing Warehouse') : t('Create New Warehouse')}
+          {selectedWarehouse ? t('Edit Warehouse') : t('Create New Warehouse')}
         </DialogTitle>
         <DialogContent>
           <WarehouseForm

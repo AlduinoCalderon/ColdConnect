@@ -104,9 +104,25 @@ export interface Warehouse {
   warehouseId: number;
   name: string;
   address: string;
-  occupation: number | string;
-  temperature: number | string;
-  createdAt?: string;
-  updatedAt?: string;
-  deletedAt?: string | null;
+  status: 'active' | 'maintenance' | 'closed';
+  amenities: Array<{
+    type: string;
+    available: boolean;
+    description: string;
+  }>;
+  operatingHours: {
+    weekdays: Array<{
+      day: string;
+      open: string;
+      close: string;
+    }>;
+  };
+  location: {
+    x: number;
+    y: number;
+  };
+  ownerId: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 } 

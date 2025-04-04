@@ -58,7 +58,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
             <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.status')}</TableCell>
             <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.address')}</TableCell>
             <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.amenities')}</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.created')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.operatingHours')}</TableCell>
             <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
           </TableRow>
         </TableHead>
@@ -97,7 +97,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
               <TableCell>{warehouse.address}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {warehouse.amenities.map((amenity, index) => (
+                  {warehouse.amenities?.map((amenity, index) => (
                     <Box
                       key={index}
                       sx={{
@@ -111,12 +111,26 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
                         fontSize: '0.75rem'
                       }}
                     >
-                      {t(`warehouse.amenitiesTypes.${amenity}`)} 
+                      {amenity.type} - {amenity.available ? 'Available' : 'Not Available'}: {amenity.description}
                     </Box>
                   ))}
                 </Box>
               </TableCell>
-              <TableCell>{formatDate(warehouse.createdAt)}</TableCell>
+              <TableCell>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                  {warehouse.operatingHours?.weekdays?.map((day, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        fontSize: '0.75rem',
+                        color: theme.palette.text.secondary
+                      }}
+                    >
+                      {day.day}: {day.open} - {day.close}
+                    </Box>
+                  ))}
+                </Box>
+              </TableCell>
               <TableCell align="right">
                 <IconButton
                   size="small"
