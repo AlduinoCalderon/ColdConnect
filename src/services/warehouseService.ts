@@ -9,17 +9,22 @@ export interface Warehouse {
   updatedAt: string;
   deletedAt: string | null;
   location: {
-    type: string;
-    coordinates: [number, number];
+    x: number;
+    y: number;
   };
   address: string;
   operatingHours: {
-    [key: string]: {
+    weekdays: Array<{
+      day: string;
       open: string;
       close: string;
-    };
+    }>;
   };
-  amenities: string[];
+  amenities: Array<{
+    type: string;
+    available: boolean;
+    description: string;
+  }>;
   totalUnits: number;
   availableUnits: number;
   occupancyRate: number;

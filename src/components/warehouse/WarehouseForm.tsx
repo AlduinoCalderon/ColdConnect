@@ -11,12 +11,12 @@ import {
   OutlinedInput,
   Typography,
 } from '@mui/material';
-import * as ReactHookForm from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Warehouse } from '../../services/warehouseService';
 import { useTranslation } from 'react-i18next';
 
 interface WarehouseFormProps {
-  warehouse?: Warehouse | null;
+  warehouse?: Warehouse;
   onSubmit: (data: Omit<Warehouse, 'warehouseId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => void;
 }
 
@@ -30,37 +30,40 @@ interface FieldProps {
 
 const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) => {
   const { t } = useTranslation();
-  const { control, handleSubmit, formState: { errors } } = ReactHookForm.useForm({
+  const { control, handleSubmit, formState: { errors } } = useForm<Warehouse>({
     defaultValues: warehouse || {
       name: '',
-      ownerId: 1, // This should come from the authenticated user
+      ownerId: 0,
       status: 'active',
       location: {
-        type: 'Point',
-        coordinates: [0, 0],
+        x: 0,
+        y: 0
       },
       address: '',
       operatingHours: {
-        monday: { open: '09:00', close: '17:00' },
-        tuesday: { open: '09:00', close: '17:00' },
-        wednesday: { open: '09:00', close: '17:00' },
-        thursday: { open: '09:00', close: '17:00' },
-        friday: { open: '09:00', close: '17:00' },
-        saturday: { open: '09:00', close: '13:00' },
-        sunday: { open: '09:00', close: '13:00' },
+        weekdays: [
+          { day: 'Monday', open: '09:00', close: '18:00' },
+          { day: 'Tuesday', open: '09:00', close: '18:00' },
+          { day: 'Wednesday', open: '09:00', close: '18:00' },
+          { day: 'Thursday', open: '09:00', close: '18:00' },
+          { day: 'Friday', open: '09:00', close: '18:00' },
+          { day: 'Saturday', open: '09:00', close: '14:00' },
+          { day: 'Sunday', open: '09:00', close: '14:00' }
+        ]
       },
-      amenities: [],
-    },
+      amenities: []
+    }
   });
 
-  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  const commonAmenities = ['seguridad', 'climatizado', 'carga', 'descarga', 'almacenamiento'];
+  const onSubmitForm = (data: Warehouse) => {
+    onSubmit(data);
+  };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
+    <Box component="form" onSubmit={handleSubmit(onSubmitForm)} sx={{ mt: 2 }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <ReactHookForm.Controller
+          <Controller
             name="name"
             control={control}
             rules={{ required: t('validation.required') }}
@@ -77,7 +80,7 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
         </Grid>
 
         <Grid item xs={12}>
-          <ReactHookForm.Controller
+          <Controller
             name="status"
             control={control}
             rules={{ required: t('validation.required') }}
@@ -99,7 +102,7 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
         </Grid>
 
         <Grid item xs={12}>
-          <ReactHookForm.Controller
+          <Controller
             name="address"
             control={control}
             rules={{ required: t('validation.required') }}
@@ -116,36 +119,34 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <ReactHookForm.Controller
-            name="location.coordinates.0"
+          <Controller
+            name="location.x"
             control={control}
             rules={{ required: t('validation.required') }}
             render={({ field }: FieldProps) => (
               <TextField
                 {...field}
-                fullWidth
                 type="number"
                 label={t('warehouse.latitude')}
-                error={!!errors.location?.coordinates?.[0]}
-                helperText={errors.location?.coordinates?.[0]?.message}
+                error={!!errors.location?.x}
+                helperText={errors.location?.x?.message}
               />
             )}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <ReactHookForm.Controller
-            name="location.coordinates.1"
+          <Controller
+            name="location.y"
             control={control}
             rules={{ required: t('validation.required') }}
             render={({ field }: FieldProps) => (
               <TextField
                 {...field}
-                fullWidth
                 type="number"
                 label={t('warehouse.longitude')}
-                error={!!errors.location?.coordinates?.[1]}
-                helperText={errors.location?.coordinates?.[1]?.message}
+                error={!!errors.location?.y}
+                helperText={errors.location?.y?.message}
               />
             )}
           />
@@ -156,26 +157,26 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
             {t('warehouse.operatingHours')}
           </Typography>
           <Grid container spacing={2}>
-            {days.map((day) => (
-              <Grid item xs={12} sm={6} key={day}>
+            {warehouse?.operatingHours?.weekdays?.map((day, index) => (
+              <Grid item xs={12} key={index}>
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                  <ReactHookForm.Controller
-                    name={`operatingHours.${day}.open`}
+                  <Controller
+                    name={`operatingHours.weekdays.${index}.open`}
                     control={control}
                     rules={{ required: t('validation.required') }}
                     render={({ field }: FieldProps) => (
                       <TextField
                         {...field}
                         type="time"
-                        label={t(`days.${day}`)}
+                        label={t(`days.${day.day.toLowerCase()}`)}
                         InputLabelProps={{ shrink: true }}
-                        error={!!errors.operatingHours?.[day]?.open}
-                        helperText={errors.operatingHours?.[day]?.open?.message}
+                        error={!!errors.operatingHours?.weekdays?.[index]?.open}
+                        helperText={errors.operatingHours?.weekdays?.[index]?.open?.message}
                       />
                     )}
                   />
-                  <ReactHookForm.Controller
-                    name={`operatingHours.${day}.close`}
+                  <Controller
+                    name={`operatingHours.weekdays.${index}.close`}
                     control={control}
                     rules={{ required: t('validation.required') }}
                     render={({ field }: FieldProps) => (
@@ -184,8 +185,8 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
                         type="time"
                         label={t('warehouse.close')}
                         InputLabelProps={{ shrink: true }}
-                        error={!!errors.operatingHours?.[day]?.close}
-                        helperText={errors.operatingHours?.[day]?.close?.message}
+                        error={!!errors.operatingHours?.weekdays?.[index]?.close}
+                        helperText={errors.operatingHours?.weekdays?.[index]?.close?.message}
                       />
                     )}
                   />
@@ -193,31 +194,6 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ warehouse, onSubmit }) =>
               </Grid>
             ))}
           </Grid>
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel>{t('warehouse.amenities')}</InputLabel>
-            <ReactHookForm.Controller
-              name="amenities"
-              control={control}
-              render={({ field }: FieldProps) => (
-                <Select
-                  {...field}
-                  multiple
-                  value={field.value || []}
-                  onChange={(e) => field.onChange(e.target.value)}
-                  input={<OutlinedInput label={t('warehouse.amenities')} />}
-                >
-                  {commonAmenities.map((amenity) => (
-                    <MenuItem key={amenity} value={amenity}>
-                      {t(`warehouse.amenitiesTypes.${amenity}`)}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          </FormControl>
         </Grid>
 
         <Grid item xs={12}>
