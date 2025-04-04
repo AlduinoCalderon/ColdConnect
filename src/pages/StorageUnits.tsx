@@ -83,7 +83,7 @@ const StorageUnits: React.FC = () => {
       case 'maintenance':
         return 'warning';
       case 'reserved':
-        return 'warning';
+        return 'secondary';
       default:
         return 'default';
     }
@@ -157,11 +157,24 @@ const StorageUnits: React.FC = () => {
                   ${unit.costPerHour}/hr
                 </TableCell>
                 <TableCell>
-                  <Chip
-                    label={t(`storageUnit.statusTypes.${unit.status}`)}
-                    color={getStatusColor(unit.status)}
-                    size="small"
-                  />
+                  <Box 
+                    sx={{ 
+                      display: 'inline-block',
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                      backgroundColor: 
+                        unit.status === 'available' ? theme.palette.success.light :
+                        unit.status === 'occupied' ? theme.palette.info.light :
+                        unit.status === 'maintenance' ? theme.palette.warning.light :
+                        theme.palette.secondary.light,
+                      
+                      textTransform: 'capitalize',
+                      fontWeight: 'medium'
+                    }}
+                  >
+                    {t(`storageUnit.statusTypes.${unit.status}`)}
+                  </Box>
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
