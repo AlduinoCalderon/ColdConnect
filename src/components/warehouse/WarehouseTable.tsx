@@ -8,9 +8,8 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Chip,
   Box,
-  Typography,
+  useTheme,
 } from '@mui/material';
 import {
   Edit as EditIcon,
@@ -31,6 +30,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
   onDelete,
 }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -50,38 +50,69 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ mt: 3 }}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>{t('warehouse.name')}</TableCell>
-            <TableCell>{t('warehouse.status')}</TableCell>
-            <TableCell>{t('warehouse.address')}</TableCell>
-            <TableCell>{t('warehouse.amenities')}</TableCell>
-            <TableCell>{t('warehouse.created')}</TableCell>
-            <TableCell align="right">{t('common.actions')}</TableCell>
+          <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.name')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.status')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.address')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.amenities')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.created')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {warehouses.map((warehouse) => (
-            <TableRow key={warehouse.warehouseId}>
+          {warehouses.map((warehouse, index) => (
+            <TableRow 
+              key={warehouse.warehouseId}
+              sx={{ 
+                backgroundColor: index % 2 === 0 ? theme.palette.action.hover : theme.palette.background.paper,
+                '&:hover': { backgroundColor: theme.palette.action.selected }
+              }}
+            >
               <TableCell>{warehouse.name}</TableCell>
               <TableCell>
-                <Chip
-                  label={t(`warehouse.statusTypes.${warehouse.status}`)}
-                  color={getStatusColor(warehouse.status)}
-                  size="small"
-                />
+                <Box 
+                  sx={{ 
+                    display: 'inline-block',
+                    px: 1,
+                    py: 0.5,
+                    borderRadius: 1,
+                    backgroundColor: 
+                      warehouse.status === 'active' ? theme.palette.success.light :
+                      warehouse.status === 'maintenance' ? theme.palette.warning.light :
+                      theme.palette.error.light,
+                    //color: 
+                      //warehouse.status === 'active' ? theme.palette.success.dark :
+                      //warehouse.status === 'maintenance' ? theme.palette.warning.dark :
+                      //theme.palette.error.dark,
+                    textTransform: 'capitalize',
+                    fontWeight: 'medium'
+                  }}
+                >
+                  {t(`warehouse.statusTypes.${warehouse.status}`)}
+                </Box>
               </TableCell>
               <TableCell>{warehouse.address}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                   {warehouse.amenities.map((amenity, index) => (
-                    <Chip
+                    <Box
                       key={index}
-                      label={t(`warehouse.amenitiesTypes.${amenity}`)}
-                      size="small"
-                    />
+                      sx={{
+                        display: 'inline-block',
+                        px: 1,
+                        py: 0.5,
+                        borderRadius: 1,
+                        backgroundColor: theme.palette.secondary.light,
+                        color: theme.palette.secondary.dark,
+                        textTransform: 'capitalize',
+                        fontSize: '0.75rem'
+                      }}
+                    >
+                      {t(`warehouse.amenitiesTypes.${amenity}`)}
+                    </Box>
                   ))}
                 </Box>
               </TableCell>
@@ -91,6 +122,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
                   size="small"
                   onClick={() => onEdit?.(warehouse)}
                   title={t('common.edit')}
+                  color="primary"
                 >
                   <EditIcon />
                 </IconButton>
