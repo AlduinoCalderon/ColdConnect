@@ -226,7 +226,7 @@ const Home: React.FC = () => {
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>
-          {t('warehouse.create')}
+          {t('Add New Warehouse')}
         </DialogTitle>
         <DialogContent>
           <WarehouseForm

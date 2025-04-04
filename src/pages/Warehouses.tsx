@@ -120,7 +120,7 @@ const Warehouses: React.FC = () => {
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>
-          {selectedWarehouse ? t('warehouse.edit') : t('warehouse.create')}
+          {selectedWarehouse ? t('Edit Existing Warehouse') : t('Create New Warehouse')}
         </DialogTitle>
         <DialogContent>
           <WarehouseForm
