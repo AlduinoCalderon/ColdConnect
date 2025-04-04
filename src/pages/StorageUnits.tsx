@@ -101,7 +101,7 @@ const StorageUnits: React.FC = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">
-          {t('storageUnit.title')}
+          {t('Storage Units')}
         </Typography>
         <Button
           variant="contained"
@@ -109,7 +109,7 @@ const StorageUnits: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={handleCreate}
         >
-          {t('storageUnit.add')}
+          {t('Add Storage Unit')}
         </Button>
       </Box>
 
@@ -123,13 +123,13 @@ const StorageUnits: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.name')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.warehouse')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.dimensions')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.temperature')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.humidity')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.cost')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.status')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Unit Name')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Warehouse')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Dimensions')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Temperature')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Humidity')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Cost')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Status')}</TableCell>
               <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>
@@ -173,7 +173,7 @@ const StorageUnits: React.FC = () => {
                       fontWeight: 'medium'
                     }}
                   >
-                    {t(`storageUnit.statusTypes.${unit.status}`)}
+                    {t(`${unit.status}`)}
                   </Box>
                 </TableCell>
                 <TableCell align="right">

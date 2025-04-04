@@ -111,7 +111,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
                         fontSize: '0.75rem'
                       }}
                     >
-                      {t(`warehouse.amenitiesTypes.${amenity}`)}
+                      {t(`warehouse.amenitiesTypes.${amenity}`)} 
                     </Box>
                   ))}
                 </Box>
