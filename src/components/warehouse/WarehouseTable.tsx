@@ -109,7 +109,7 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
   // Function to format operating hours correctly
   const renderOperatingHours = (warehouse: Warehouse) => {
     const operatingHours = warehouse.operatingHours;
-    
+
     // Check if operatingHours has weekdays array format
     if (operatingHours?.weekdays && Array.isArray(operatingHours.weekdays)) {
       return (
@@ -122,35 +122,14 @@ const WarehouseTable: React.FC<WarehouseTableProps> = ({
                 color: theme.palette.text.secondary
               }}
             >
-              {day.day}: {day.hours ? day.hours.join(', ') : (day.open && day.close ? `${day.open} - ${day.close}` : 'Closed')}
+              {day.day}: {day.open && day.close ? `${day.open} - ${day.close}` : 'Closed'}
             </Box>
           ))}
         </Box>
       );
     }
-    
-    // Handle flat structure (direct day properties)
-    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-    return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-        {days.map(day => {
-          const dayInfo = operatingHours?.[day];
-          if (!dayInfo) return null;
-          
-          return (
-            <Box
-              key={day}
-              sx={{
-                fontSize: '0.75rem',
-                color: theme.palette.text.secondary
-              }}
-            >
-              {day.charAt(0).toUpperCase() + day.slice(1)}: {dayInfo.open} - {dayInfo.close}
-            </Box>
-          );
-        })}
-      </Box>
-    );
+
+    return null; // Return null if no operating hours are available
   };
 
   return (
