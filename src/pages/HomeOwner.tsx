@@ -31,6 +31,7 @@ import { storageUnitService } from '../services/storageUnitService';
 import StorageUnitCard from '../components/storageUnit/StorageUnitCard';
 import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
 import AddStorageUnitCard from '../components/storageUnit/AddStorageUnitCard';
+import { useNavigate } from 'react-router-dom';
 
 const StatCard: React.FC<{
   title: string;
@@ -106,6 +107,7 @@ const Home: React.FC = () => {
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
   const [openStorageUnitDialog, setOpenStorageUnitDialog] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState<StorageUnit | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWarehouses = async () => {
@@ -162,6 +164,10 @@ const Home: React.FC = () => {
       console.error('Error saving storage unit:', err);
       setError(t('storageUnit.error.save'));
     }
+  };
+
+  const handleStorageUnitClick = (unitId: number) => {
+    navigate(`/storage-units/${unitId}`);
   };
 
   return (
