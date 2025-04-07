@@ -7,6 +7,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { StorageUnit } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 interface StorageUnitCardProps {
   storageUnit: StorageUnit;
@@ -14,9 +15,17 @@ interface StorageUnitCardProps {
 
 const StorageUnitCard: React.FC<StorageUnitCardProps> = ({ storageUnit }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleStorageUnitClick = () => {
+    navigate(`/storage-units/${storageUnit.unitId}`);
+  };
 
   return (
-    <Card sx={{ height: '100%', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}>
+    <Card 
+      sx={{ height: '100%', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}
+      onClick={handleStorageUnitClick}
+    >
       <CardContent>
         <Typography variant="h6" gutterBottom>
           {storageUnit.name}
