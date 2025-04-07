@@ -26,6 +26,9 @@ import { useTranslation } from 'react-i18next';
 import WarehouseCard from '../components/WarehouseCard';
 import WarehouseForm from '../components/warehouse/WarehouseForm';
 import { Warehouse, warehouseService } from '../services/warehouseService';
+import { StorageUnit } from '../types';
+import { storageUnitService } from '../services/storageUnitService';
+import StorageUnitCard from '../components/storageUnit/StorageUnitCard';
 
 const StatCard: React.FC<{
   title: string;
@@ -36,7 +39,7 @@ const StatCard: React.FC<{
   const theme = useTheme();
   
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.05)' } }}>
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Box
@@ -98,6 +101,7 @@ const Home: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
 
   useEffect(() => {
     const fetchWarehouses = async () => {
@@ -110,7 +114,18 @@ const Home: React.FC = () => {
       }
     };
 
+    const fetchStorageUnits = async () => {
+      try {
+        const data = await storageUnitService.getAll();
+        setStorageUnits(data);
+      } catch (err) {
+        console.error('Error fetching storage units:', err);
+        setError(t('storageUnit.error.fetch'));
+      }
+    };
+
     fetchWarehouses();
+    fetchStorageUnits();
   }, []);
 
   const handleAddWarehouse = () => {
@@ -185,6 +200,23 @@ const Home: React.FC = () => {
             {warehouses.map((warehouse) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={warehouse.warehouseId}>
                 <WarehouseCard warehouse={warehouse} />
+              </Grid>
+            ))}
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <AddWarehouseCard onClick={handleAddWarehouse} />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/* Storage Units Section */}
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
+            Your Storage Units
+          </Typography>
+          <Grid container spacing={3} justifyContent="center">
+            {storageUnits.map((unit) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={unit.unitId}>
+                <StorageUnitCard storageUnit={unit} />
               </Grid>
             ))}
             <Grid item xs={12} sm={6} md={4} lg={3}>
