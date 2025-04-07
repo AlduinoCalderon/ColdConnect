@@ -78,6 +78,8 @@ const resources = {
       },
       validation: {
         required: 'This field is required',
+        minTempLessThanMaxTemp: 'Minimum temperature must be less than maximum temperature',
+        minHumidityLessThanMaxHumidity: 'Minimum humidity must be less than maximum humidity',
       },
       days: {
         monday: 'Monday',
@@ -166,6 +168,8 @@ const resources = {
       },
       validation: {
         required: 'Este campo es requerido',
+        minTempLessThanMaxTemp: 'La temperatura mínima debe ser menor que la temperatura máxima',
+        minHumidityLessThanMaxHumidity: 'La humedad mínima debe ser menor que la humedad máxima',
       },
       days: {
         monday: 'Lunes',
