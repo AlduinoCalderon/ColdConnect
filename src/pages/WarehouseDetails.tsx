@@ -10,17 +10,11 @@ import {
   Paper,
   Card,
   CardContent,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
   Chip,
 } from '@mui/material';
 import {
   LocationOn as LocationIcon,
-  AccessTime as TimeIcon,
   Storage as StorageIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
@@ -139,19 +133,18 @@ const WarehouseDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [isStorageUnitFormOpen, setIsStorageUnitFormOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const warehouseData = await warehouseService.getById(Number(id));
         setWarehouse(warehouseData);
-        
+
         try {
           const units = await storageUnitService.getByWarehouseId(Number(id));
           setStorageUnits(units);
         } catch (err: any) {
-          // If we get a 404, it means there are no storage units yet
           if (err.response?.status === 404) {
             setStorageUnits([]);
           } else {
@@ -171,25 +164,20 @@ const WarehouseDetails: React.FC = () => {
   }, [id]);
 
   const handleAddStorageUnit = () => {
-    setOpenDialog(true);
+    setIsStorageUnitFormOpen(true);
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const handleStorageUnitSubmit = async (data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
-    if (!warehouse) return;
+  const handleStorageUnitFormSubmit = async (data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
     try {
-      const newUnit = await storageUnitService.create({
+      const newStorageUnit = await storageUnitService.create({
         ...data,
-        warehouseId: warehouse.warehouseId
+        warehouseId: Number(id),
       });
-      setStorageUnits([...storageUnits, newUnit]);
-      handleCloseDialog();
+      setStorageUnits([...storageUnits, newStorageUnit]);
+      setIsStorageUnitFormOpen(false);
     } catch (err) {
-      console.error('Error saving storage unit:', err);
-      setError('Could not save storage unit. Please try again.');
+      console.error('Error creating storage unit:', err);
+      setError('Failed to create storage unit. Please try again.');
     }
   };
 
@@ -252,39 +240,13 @@ const WarehouseDetails: React.FC = () => {
         )}
       </Box>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
-        <DialogTitle>Add New Storage Unit</DialogTitle>
-        <DialogContent>
-          {warehouse && (
-            <StorageUnitForm
-              open={openDialog}
-              onClose={handleCloseDialog}
-              onSubmit={handleStorageUnitSubmit}
-              warehouses={[warehouse]}
-              initialData={{
-                unitId: 0,
-                name: '',
-                warehouseId: warehouse.warehouseId,
-                width: 0,
-                height: 0,
-                depth: 0,
-                minTemp: 0,
-                maxTemp: 0,
-                minHumidity: 0,
-                maxHumidity: 0,
-                costPerHour: 0,
-                status: 'available',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                deletedAt: null
-              }}
-            />
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
+      <StorageUnitForm
+        open={isStorageUnitFormOpen}
+        onClose={() => setIsStorageUnitFormOpen(false)}
+        onSubmit={handleStorageUnitFormSubmit}
+        warehouses={[warehouse]}
+        initialData={undefined}
+      />
     </Container>
   );
 };
