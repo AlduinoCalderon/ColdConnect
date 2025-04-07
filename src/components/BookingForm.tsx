@@ -53,6 +53,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (mode === 'edit' && booking) {
@@ -135,6 +136,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
         setLoading(false);
       }
     }
+  };
+
+  const handleAddStorageUnit = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
 
   return (
@@ -256,12 +265,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               ))}
               <Button 
                 variant="outlined" 
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    units: [...(formData.units || []), { unitId: 0, pricePerHour: 0 }]
-                  });
-                }}
+                onClick={handleAddStorageUnit}
                 sx={{ mt: 1 }}
               >
                 Add Unit
@@ -298,6 +302,15 @@ const BookingForm: React.FC<BookingFormProps> = ({
           </Box>
         </DialogActions>
       </form>
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+        <DialogTitle>Add New Storage Unit</DialogTitle>
+        <DialogContent>
+          {/* Add your StorageUnitForm component here */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </Dialog>
   );
 };
