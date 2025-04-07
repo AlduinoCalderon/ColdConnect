@@ -292,7 +292,7 @@ const Home: React.FC = () => {
         onClose={() => setOpenStorageUnitDialog(false)}
         onSubmit={handleStorageUnitSubmit}
         warehouses={warehouses}
-        initialData={selectedUnit}
+        initialData={selectedUnit || undefined}
       />
     </Box>
   );
