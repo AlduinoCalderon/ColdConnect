@@ -17,6 +17,7 @@ import Home from './pages/Home';
 import HomeOwner from './pages/HomeOwner';
 import Warehouses from './pages/Warehouses';
 import StorageUnits from './pages/StorageUnits';
+import StorageUnitDetails from './pages/StorageUnitDetails';
 import Bookings from './pages/Bookings';
 import Payments from './pages/Payments';
 import Users from './pages/Users';
@@ -45,6 +46,7 @@ const App: React.FC = () => {
             <Route path="/warehouses" element={<Warehouses />} />
             <Route path="/warehouses/:id" element={<WarehouseDetails />} />
             <Route path="/storage-units" element={<StorageUnits />} />
+            <Route path="/storage-units/:id" element={<StorageUnitDetails />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/users" element={<Users />} />
