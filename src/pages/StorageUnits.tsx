@@ -28,6 +28,7 @@ import { storageUnitService } from '../services/storageUnitService';
 import { useTheme } from '@mui/material/styles';
 import { warehouseService } from '../services/warehouseService';
 import { Warehouse } from '../types';
+import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
 
 const StorageUnits: React.FC = () => {
   const { t } = useTranslation();
@@ -84,6 +85,22 @@ const StorageUnits: React.FC = () => {
     } catch (err) {
       console.error('Error deleting storage unit:', err);
       setError(t('storageUnit.error.delete'));
+    }
+  };
+
+  const handleSubmit = async (data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
+    try {
+      if (selectedUnit) {
+        const updatedUnit = await storageUnitService.update(selectedUnit.unitId, data);
+        setUnits(units.map(u => u.unitId === selectedUnit.unitId ? updatedUnit : u));
+      } else {
+        const newUnit = await storageUnitService.create(data);
+        setUnits([...units, newUnit]);
+      }
+      setOpenDialog(false);
+    } catch (err) {
+      console.error('Error saving storage unit:', err);
+      setError(t('storageUnit.error.save'));
     }
   };
 
@@ -211,7 +228,13 @@ const StorageUnits: React.FC = () => {
         </Table>
       </TableContainer>
 
-      {/* TODO: Add StorageUnitForm dialog component */}
+      <StorageUnitForm
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onSubmit={handleSubmit}
+        warehouses={warehouses}
+        initialData={selectedUnit || undefined}
+      />
     </Container>
   );
 };
