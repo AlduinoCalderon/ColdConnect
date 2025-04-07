@@ -30,6 +30,7 @@ import { StorageUnit } from '../types';
 import { storageUnitService } from '../services/storageUnitService';
 import StorageUnitCard from '../components/storageUnit/StorageUnitCard';
 import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
+import AddStorageUnitCard from '../components/storageUnit/AddStorageUnitCard';
 
 const StatCard: React.FC<{
   title: string;
@@ -103,6 +104,8 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
+  const [openStorageUnitDialog, setOpenStorageUnitDialog] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState<StorageUnit | null>(null);
 
   useEffect(() => {
     const fetchWarehouses = async () => {
@@ -142,6 +145,22 @@ const Home: React.FC = () => {
     } catch (err) {
       console.error('Error saving warehouse:', err);
       setError(t('warehouse.error.save'));
+    }
+  };
+
+  const handleAddStorageUnit = () => {
+    setSelectedUnit(null);
+    setOpenStorageUnitDialog(true);
+  };
+
+  const handleStorageUnitSubmit = async (data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
+    try {
+      const newUnit = await storageUnitService.create(data);
+      setStorageUnits([...storageUnits, newUnit]);
+      setOpenStorageUnitDialog(false);
+    } catch (err) {
+      console.error('Error saving storage unit:', err);
+      setError(t('storageUnit.error.save'));
     }
   };
 
@@ -221,7 +240,7 @@ const Home: React.FC = () => {
               </Grid>
             ))}
             <Grid item xs={12} sm={6} md={4} lg={3}>
-              <AddWarehouseCard onClick={handleAddWarehouse} />
+              <AddStorageUnitCard onClick={handleAddStorageUnit} />
             </Grid>
           </Grid>
         </Grid>
@@ -267,6 +286,14 @@ const Home: React.FC = () => {
           />
         </DialogContent>
       </Dialog>
+
+      <StorageUnitForm
+        open={openStorageUnitDialog}
+        onClose={() => setOpenStorageUnitDialog(false)}
+        onSubmit={handleStorageUnitSubmit}
+        warehouses={warehouses}
+        initialData={selectedUnit}
+      />
     </Box>
   );
 };
