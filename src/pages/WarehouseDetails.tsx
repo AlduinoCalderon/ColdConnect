@@ -10,23 +10,19 @@ import {
   Paper,
   Card,
   CardContent,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
   Chip,
 } from '@mui/material';
 import {
   LocationOn as LocationIcon,
-  AccessTime as TimeIcon,
   Storage as StorageIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
 import { warehouseService, Warehouse } from '../services/warehouseService';
 import { storageUnitService } from '../services/storageUnitService';
 import { StorageUnit } from '../types';
+import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
+import AddStorageUnitCard from '../components/storageUnit/AddStorageUnitCard';
 
 const WarehouseHeader: React.FC<{ warehouse: Warehouse }> = ({ warehouse }) => {
   return (
@@ -131,58 +127,34 @@ const StorageUnitCard: React.FC<{ unit: StorageUnit }> = ({ unit }) => {
   );
 };
 
-const AddStorageUnitCard: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  return (
-    <Card 
-      sx={{ 
-        height: '100%', 
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        transition: 'transform 0.3s',
-        '&:hover': {
-          transform: 'scale(1.05)',
-        }
-      }}
-      onClick={onClick}
-    >
-      <CardContent sx={{ textAlign: 'center' }}>
-        <IconButton size="large" color="primary">
-          <AddIcon sx={{ fontSize: 40 }} />
-        </IconButton>
-        <Typography variant="h6" color="text.secondary">
-          Add New Storage Unit
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-};
-
 const WarehouseDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [warehouse, setWarehouse] = useState<Warehouse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [storageUnits, setStorageUnits] = useState<StorageUnit[]>([]);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [isStorageUnitFormOpen, setIsStorageUnitFormOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const warehouseData = await warehouseService.getById(Number(id));
         setWarehouse(warehouseData);
-        
+
         try {
           const units = await storageUnitService.getByWarehouseId(Number(id));
           setStorageUnits(units);
-        } catch (unitsError) {
-          console.error('Error fetching storage units:', unitsError);
-          setStorageUnits([]);
+        } catch (err: any) {
+          if (err.response?.status === 404) {
+            setStorageUnits([]);
+          } else {
+            console.error('Error fetching storage units:', err);
+            setError('Could not load storage units. Please try again.');
+          }
         }
       } catch (err) {
         console.error('Error fetching warehouse:', err);
-        setError('No se pudo cargar la información del almacén. Por favor, intente nuevamente.');
+        setError('Could not load warehouse information. Please try again.');
       } finally {
         setLoading(false);
       }
@@ -192,7 +164,21 @@ const WarehouseDetails: React.FC = () => {
   }, [id]);
 
   const handleAddStorageUnit = () => {
-    setOpenDialog(true);
+    setIsStorageUnitFormOpen(true);
+  };
+
+  const handleStorageUnitFormSubmit = async (data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
+    try {
+      const newStorageUnit = await storageUnitService.create({
+        ...data,
+        warehouseId: Number(id),
+      });
+      setStorageUnits([...storageUnits, newStorageUnit]);
+      setIsStorageUnitFormOpen(false);
+    } catch (err) {
+      console.error('Error creating storage unit:', err);
+      setError('Failed to create storage unit. Please try again.');
+    }
   };
 
   if (loading) {
@@ -212,11 +198,7 @@ const WarehouseDetails: React.FC = () => {
   }
 
   if (!warehouse) {
-    return (
-      <Container>
-        <Alert severity="error">Warehouse not found</Alert>
-      </Container>
-    );
+    return <Container><Alert severity="error">Warehouse not found.</Alert></Container>;
   }
 
   return (
@@ -258,21 +240,15 @@ const WarehouseDetails: React.FC = () => {
         )}
       </Box>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
-        <DialogTitle>Add New Storage Unit</DialogTitle>
-        <DialogContent>
-          {/* Aquí irá el formulario para agregar un nuevo storage unit */}
-          <Typography>Storage Unit Form will go here</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button variant="contained" color="primary">
-            Add Storage Unit
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <StorageUnitForm
+        open={isStorageUnitFormOpen}
+        onClose={() => setIsStorageUnitFormOpen(false)}
+        onSubmit={handleStorageUnitFormSubmit}
+        warehouses={[warehouse]}
+        initialData={undefined}
+      />
     </Container>
   );
 };
 
-export default WarehouseDetails; 
+export default WarehouseDetails;

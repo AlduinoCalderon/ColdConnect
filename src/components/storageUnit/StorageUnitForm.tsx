@@ -62,7 +62,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {initialData ? t('Edit Storage Unit') : t('Add New Storage Unit')}
+        {initialData ? t('New Storage Unit') : t('Add New Storage Unit')}
       </DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
@@ -75,7 +75,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
-                    label={t('New Storage UnitName')}
+                    label={t('New Storage Unit Name')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -268,7 +268,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{t('common.cancel')}</Button>
+          <Button onClick={handleClose}>{t('Cancel')}</Button>
           <Button type="submit" variant="contained" color="primary">
             {initialData ? t('common.save') : t('common.create')}
           </Button>
