@@ -29,6 +29,7 @@ import { Warehouse, warehouseService } from '../services/warehouseService';
 import { StorageUnit } from '../types';
 import { storageUnitService } from '../services/storageUnitService';
 import StorageUnitCard from '../components/storageUnit/StorageUnitCard';
+import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
 
 const StatCard: React.FC<{
   title: string;
