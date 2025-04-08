@@ -45,7 +45,22 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
       costPerHour: 0,
       status: 'available',
     },
+    mode: 'onChange',
   });
+
+  const validateTemperature = (value: number, allValues: any) => {
+    if (allValues.minTemp >= allValues.maxTemp) {
+      return t('validation.minTempLessThanMaxTemp');
+    }
+    return true;
+  };
+
+  const validateHumidity = (value: number, allValues: any) => {
+    if (allValues.minHumidity >= allValues.maxHumidity) {
+      return t('validation.minHumidityLessThanMaxHumidity');
+    }
+    return true;
+  };
 
   const handleClose = () => {
     reset();
@@ -59,12 +74,20 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
     { value: 'reserved', label: t('Reserved') },
   ];
 
+  const handleSubmitForm = (
+    data: Omit<StorageUnit, 'unitId' | 'createdAt' | 'updatedAt' | 'deletedAt'>
+  ) => {
+  
+    console.log('Submitting data:', data);
+    onSubmit(data);
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>
         {initialData ? t('New Storage Unit') : t('Add New Storage Unit')}
       </DialogTitle>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -161,7 +184,10 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
               <Controller
                 name="minTemp"
                 control={control}
-                rules={{ required: t('validation.required') }}
+                rules={{ 
+                  required: t('validation.required'),
+                  validate: validateTemperature
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
@@ -178,7 +204,10 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
               <Controller
                 name="maxTemp"
                 control={control}
-                rules={{ required: t('validation.required') }}
+                rules={{ 
+                  required: t('validation.required'),
+                  validate: validateTemperature
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
@@ -195,7 +224,10 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
               <Controller
                 name="minHumidity"
                 control={control}
-                rules={{ required: t('validation.required') }}
+                rules={{ 
+                  required: t('validation.required'),
+                  validate: validateHumidity
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
@@ -212,7 +244,10 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
               <Controller
                 name="maxHumidity"
                 control={control}
-                rules={{ required: t('validation.required') }}
+                rules={{ 
+                  required: t('validation.required'),
+                  validate: validateHumidity
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
