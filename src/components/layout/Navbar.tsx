@@ -80,20 +80,40 @@ const Navbar: React.FC = () => {
             </IconButton>
           )}
           
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
+          <Box
             sx={{
-              flexGrow: 1,
-              marginLeft: { xs: "0px", sm: "240px" },
-              transition: "margin-left 0.3s ease-in-out",
+              display: 'flex',
+              alignItems: 'center',
+              marginLeft: { xs: '0', sm: '240px' },
+              transition: 'margin-left 0.3s ease-in-out',
             }}
           >
-            Cold Connect
-          </Typography>
+            <Box
+              component="img"
+              src="/logo512.png"
+              alt="Cold Connect Logo"
+              sx={{
+                height: 40,
+                width: 'auto',
+                mr: 2,
+                backgroundColor: 'transparent',
+              }}
+            />
+            
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                flexGrow: 1,
+                marginLeft: 0,
+              }}
+            >
+              Cold Connect
+            </Typography>
+          </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, marginLeft: 'auto' }}>
             <Tooltip title={t('notifications.title')}>
               <IconButton
                 color="inherit"
