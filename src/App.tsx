@@ -41,7 +41,8 @@ const App: React.FC = () => {
           <Navbar />
           <Sidebar />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomeOwner />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/home-owner" element={<HomeOwner />} />
             <Route path="/warehouses" element={<Warehouses />} />
             <Route path="/warehouses/:id" element={<WarehouseDetails />} />

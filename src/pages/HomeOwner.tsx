@@ -13,6 +13,11 @@ import {
   DialogContent,
   DialogActions,
   Alert,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
 } from '@mui/material';
 //comentario pa poder pushear
 import {
@@ -21,6 +26,7 @@ import {
   TrendingUp as TrendingUpIcon,
   Warning as WarningIcon,
   Add as AddIcon,
+  EventNote as CalendarIcon,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import WarehouseCard from '../components/WarehouseCard';
@@ -109,6 +115,19 @@ const Home: React.FC = () => {
   const [selectedUnit, setSelectedUnit] = useState<StorageUnit | null>(null);
   const navigate = useNavigate();
 
+  // Calculate statistics
+  const totalWarehouses = warehouses.length;
+  const totalBookings = storageUnits.filter(unit => unit.status === 'occupied').length;
+  
+  const totalOccupancyRate = warehouses.length > 0
+    ? warehouses.reduce((sum, warehouse) => {
+        const warehouseUnits = storageUnits.filter(unit => unit.warehouseId === warehouse.warehouseId);
+        const totalUnits = warehouseUnits.length;
+        const availableUnits = warehouseUnits.filter(unit => unit.status === 'available').length;
+        return sum + (totalUnits > 0 ? ((totalUnits - availableUnits) / totalUnits) * 100 : 0);
+      }, 0) / warehouses.length
+    : 0;
+
   useEffect(() => {
     const fetchWarehouses = async () => {
       try {
@@ -187,7 +206,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
             title={t('warehouse.title')}
-            value={warehouses.length}
+            value={totalWarehouses}
             icon={<WarehouseIcon sx={{ color: 'white' }} />}
             color={theme.palette.primary.main}
           />
@@ -195,7 +214,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
             title={t('booking.title')}
-            value="45"
+            value={totalBookings}
             icon={<BookingIcon sx={{ color: 'white' }} />}
             color={theme.palette.secondary.main}
           />
@@ -203,7 +222,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
             title="Occupancy Rate"
-            value="85%"
+            value={`${totalOccupancyRate.toFixed(1)}%`}
             icon={<TrendingUpIcon sx={{ color: 'white' }} />}
             color="#4caf50"
           />
@@ -252,31 +271,67 @@ const Home: React.FC = () => {
         </Grid>
 
         {/* Recent Activity */}
-        <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 2, height: '100%', maxHeight: '400px', overflow: 'auto' }}>
             <Typography variant="h6" gutterBottom>
               Recent Activity
             </Typography>
-            <Box sx={{ mt: 2 }}>
-              {/* Placeholder for activity list */}
-              <Typography color="text.secondary">
-                Activity list will be displayed here
-              </Typography>
-            </Box>
+            <List dense>
+              {storageUnits.map((unit, index) => (
+                <React.Fragment key={unit?.unitId}>
+                  <ListItem>
+                    <ListItemIcon>
+                      <CalendarIcon color="primary" />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={`Unit ${unit?.name}`}
+                      secondary={
+                        <>
+                          <Typography variant="body2" component="span">
+                            Warehouse: {warehouses.find(w => w.warehouseId === unit?.warehouseId)?.name || 'Unknown'}
+                          </Typography>
+                          {unit?.status === 'occupied' && (
+                            <>
+                              <br />
+                              <Typography variant="body2" component="span">
+                                Status: {unit.status}
+                              </Typography>
+                            </>
+                          )}
+                        </>
+                      }
+                    />
+                  </ListItem>
+                  {index < storageUnits.length - 1 && <Divider />}
+                </React.Fragment>
+              ))}
+              {(!storageUnits || storageUnits.length === 0) && (
+                <Typography color="text.secondary">
+                  No recent activity
+                </Typography>
+              )}
+            </List>
           </Paper>
         </Grid>
 
         {/* Temperature Overview */}
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ p: 2, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
-              Temperature Overview
             </Typography>
-            <Box sx={{ mt: 2 }}>
-              {/* Placeholder for temperature chart */}
-              <Typography color="text.secondary">
-                Temperature chart will be displayed here
-              </Typography>
+            <Box sx={{ mt: 2, height: '500px', width: '100%' }} style={{ 
+              background: theme.palette.mode === 'dark' ? '#121212' : '#FFFFFF',
+            }}>
+              <iframe 
+                style={{ 
+                  border: 'none',
+                  borderRadius: '2px',
+                  boxShadow: '0 2px 10px 0 rgba(70, 76, 79, .2)',
+                  width: '100%',
+                  height: '100%'
+                }} 
+                src={`https://charts.mongodb.com/charts-project-0-esjksfr/embed/charts?id=12f79464-0622-4701-9cb1-25fabc6eb583&maxDataAge=300&theme=${theme.palette.mode === 'dark' ? 'dark' : 'light'}&autoRefresh=true`}
+              />
             </Box>
           </Paper>
         </Grid>
