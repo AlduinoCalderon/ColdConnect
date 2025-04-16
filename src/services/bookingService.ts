@@ -46,9 +46,7 @@ export const bookingService = {
     }
   },
 
-  create: async (data: Omit<Booking, 'bookingId' | 'createdAt' | 'updatedAt' | 'deletedAt'> & {
-    units: { unitId: number; pricePerHour: number }[];
-  }) => {
+  create: async (data: Omit<Booking, 'bookingId' | 'createdAt' | 'updatedAt' | 'deletedAt'>) => {
     try {
       const response = await create<Booking>(BOOKING_ENDPOINT, data);
       return response.data;

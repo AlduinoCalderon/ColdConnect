@@ -10,6 +10,14 @@ export interface User {
   deletedAt: string | null;
 }
 
+export interface Reading {
+  _id: string;
+  unitId: string;
+  sensorType: 'temperature' | 'humidity' | 'proximity1' | 'proximity2' | 'motion' | 'door';
+  value: number;
+  timestamp: string;
+}
+
 export interface StorageUnit {
   unitId: number;
   warehouseId: number;
@@ -23,6 +31,8 @@ export interface StorageUnit {
   minHumidity: number;
   maxHumidity: number;
   status: 'available' | 'occupied' | 'maintenance' | 'reserved';
+  startDate: string | null;
+  endDate: string | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
@@ -36,6 +46,7 @@ export interface Booking {
   endDate: string;
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
   notes?: string;
+  units: { unitId: number; pricePerHour: number }[];
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

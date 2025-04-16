@@ -56,8 +56,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const navigationItems = [
-  { path: '/', icon: <HomeIcon />, translationKey: 'Home' },
-  { path: '/home-owner', icon: <HomeIcon />, translationKey: 'Home Owner' },
+  { path: '/', icon: <HomeIcon />, translationKey: 'Home Owner' },
+  { path: '/home', icon: <HomeIcon />, translationKey: 'Home' },
   { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'Warehouses' },
   { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'Storage Units' },
   { path: '/bookings', icon: <BookingIcon />, translationKey: 'Bookings' },
