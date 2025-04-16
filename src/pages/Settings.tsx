@@ -97,6 +97,7 @@ const Settings: React.FC = () => {
                   >
                     <MenuItem value="en">English</MenuItem>
                     <MenuItem value="es">Español</MenuItem>
+                    <MenuItem value="ja">日本語</MenuItem>
                   </Select>
                 </FormControl>
               </ListItemSecondaryAction>
@@ -148,6 +149,7 @@ const Settings: React.FC = () => {
                 >
                   <MenuItem value="en">English</MenuItem>
                   <MenuItem value="es">Español</MenuItem>
+                  <MenuItem value="ja">日本語</MenuItem>
                 </Select>
               </FormControl>
             </ListItemSecondaryAction>
