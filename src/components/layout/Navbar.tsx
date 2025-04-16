@@ -42,7 +42,21 @@ const Navbar: React.FC = () => {
   };
 
   const handleLanguageChange = () => {
-    const newLang = i18nInstance.language === 'en' ? 'es' : 'en';
+    const currentLang = i18nInstance.language;
+    let newLang;
+    switch (currentLang) {
+      case 'en':
+        newLang = 'es';
+        break;
+      case 'es':
+        newLang = 'ja';
+        break;
+      case 'ja':
+        newLang = 'en';
+        break;
+      default:
+        newLang = 'en';
+    }
     i18nInstance.changeLanguage(newLang);
   };
 

@@ -77,6 +77,7 @@ const StatCard: React.FC<{
 };
 
 const AddWarehouseCard: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+  const { t } = useTranslation();
   return (
     <Card 
       sx={{ 
@@ -97,7 +98,7 @@ const AddWarehouseCard: React.FC<{ onClick: () => void }> = ({ onClick }) => {
           <AddIcon sx={{ fontSize: 40 }} />
         </IconButton>
         <Typography variant="h6" color="text.secondary">
-          Add New Warehouse
+          {t('common.add')} {t('warehouse.title')}
         </Typography>
       </CardContent>
     </Card>
@@ -239,7 +240,7 @@ const Home: React.FC = () => {
         {/* Warehouse Cards Section */}
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
-            Your Warehouses
+            {t('warehouse.title')}
           </Typography>
           <Grid container spacing={3} justifyContent="center">
             {warehouses.map((warehouse) => (
@@ -256,7 +257,7 @@ const Home: React.FC = () => {
         {/* Storage Units Section */}
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
-            Your Storage Units
+            {t('storageUnit.title')}
           </Typography>
           <Grid container spacing={3} justifyContent="center">
             {storageUnits.map((unit) => (
@@ -274,7 +275,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} md={4}>
           <Paper sx={{ p: 2, height: '100%', maxHeight: '400px', overflow: 'auto' }}>
             <Typography variant="h6" gutterBottom>
-              Recent Activity
+              {t('dashboard.recentActivity')}
             </Typography>
             <List dense>
               {storageUnits.map((unit, index) => (
@@ -318,6 +319,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 2, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
+              {t('dashboard.temperatureOverview')}
             </Typography>
             <Box sx={{ mt: 2, height: '500px', width: '100%' }} style={{ 
               background: theme.palette.mode === 'dark' ? '#121212' : '#FFFFFF',
@@ -339,7 +341,7 @@ const Home: React.FC = () => {
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
         <DialogTitle>
-          {t('Add New Warehouse')}
+          {t('warehouse.add')}
         </DialogTitle>
         <DialogContent>
           <WarehouseForm
