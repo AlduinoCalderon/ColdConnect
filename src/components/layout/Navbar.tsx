@@ -123,7 +123,7 @@ const Navbar: React.FC = () => {
                 marginLeft: 0,
               }}
             >
-              Cold Connect
+              {t('common.welcome')}
             </Typography>
           </Box>
 
