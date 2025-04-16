@@ -56,19 +56,19 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const navigationItems = [
-  { path: '/', icon: <HomeIcon />, translationKey: 'Home Owner' },
-  { path: '/home', icon: <HomeIcon />, translationKey: 'Home' },
-  { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'Warehouses' },
-  { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'Storage Units' },
-  { path: '/bookings', icon: <BookingIcon />, translationKey: 'Bookings' },
-  { path: '/payments', icon: <PaymentIcon />, translationKey: 'Payments' },
-  { path: '/users', icon: <UsersIcon />, translationKey: 'Users' },
-  { path: '/sensors', icon: <SensorsIcon />, translationKey: 'Sensors' },
-  { path: '/maintenance', icon: <MaintenanceIcon />, translationKey: 'Maintenance' },
-  { path: '/notifications', icon: <NotificationIcon />, translationKey: 'Notifications' },
-  { path: '/reports', icon: <ReportsIcon />, translationKey: 'Reports' },
-  { path: '/settings', icon: <SettingsIcon />, translationKey: 'Settings' },
-  { path: '/profile', icon: <ProfileIcon />, translationKey: 'Profile' },
+  { path: '/', icon: <HomeIcon />, translationKey: 'navigation.homeOwner' },
+  { path: '/home', icon: <HomeIcon />, translationKey: 'navigation.home' },
+  { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'navigation.warehouses' },
+  { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'navigation.storageUnits' },
+  { path: '/bookings', icon: <BookingIcon />, translationKey: 'navigation.bookings' },
+  { path: '/payments', icon: <PaymentIcon />, translationKey: 'navigation.payments' },
+  { path: '/users', icon: <UsersIcon />, translationKey: 'navigation.users' },
+  { path: '/sensors', icon: <SensorsIcon />, translationKey: 'navigation.sensors' },
+  { path: '/maintenance', icon: <MaintenanceIcon />, translationKey: 'navigation.maintenance' },
+  { path: '/notifications', icon: <NotificationIcon />, translationKey: 'navigation.notifications' },
+  { path: '/reports', icon: <ReportsIcon />, translationKey: 'navigation.reports' },
+  { path: '/settings', icon: <SettingsIcon />, translationKey: 'navigation.settings' },
+  { path: '/profile', icon: <ProfileIcon />, translationKey: 'navigation.profile' },
 ];
 
 //comentario para hacer merge
@@ -76,7 +76,7 @@ const Sidebar: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n: i18nInstance } = useTranslation();
   const dispatch = useDispatch();
   const themeMode = useSelector((state: RootState) => state.theme.mode);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -90,7 +90,22 @@ const Sidebar: React.FC = () => {
   };
 
   const handleLanguageChange = () => {
-    // Implement language change logic here
+    const currentLang = i18nInstance.language;
+    let newLang;
+    switch (currentLang) {
+      case 'en':
+        newLang = 'es';
+        break;
+      case 'es':
+        newLang = 'ja';
+        break;
+      case 'ja':
+        newLang = 'en';
+        break;
+      default:
+        newLang = 'en';
+    }
+    i18nInstance.changeLanguage(newLang);
   };
 
   return (
@@ -130,7 +145,7 @@ const Sidebar: React.FC = () => {
             <ListItemIcon>
               {themeMode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
             </ListItemIcon>
-            <ListItemText primary={t('Toggle Theme')} />
+            <ListItemText primary={themeMode === 'light' ? t('settings.darkMode') : t('settings.lightMode')} />
           </ListItem>
           <ListItem button onClick={handleLanguageChange}>
             <ListItemIcon>
