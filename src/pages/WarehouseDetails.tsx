@@ -24,7 +24,27 @@ import { StorageUnit } from '../types';
 import StorageUnitForm from '../components/storageUnit/StorageUnitForm';
 import AddStorageUnitCard from '../components/storageUnit/AddStorageUnitCard';
 
-const WarehouseHeader: React.FC<{ warehouse: Warehouse }> = ({ warehouse }) => {
+const WarehouseHeader: React.FC<{ warehouse: Warehouse; storageUnits: StorageUnit[] }> = ({ warehouse, storageUnits }) => {
+  const totalUnits = storageUnits.length;
+  const availableUnits = storageUnits.filter(unit => unit.status === 'available').length;
+  const occupancyRate = totalUnits > 0 ? ((totalUnits - availableUnits) / totalUnits) * 100 : 0;
+  
+  const avgTemperature = storageUnits.length > 0 
+    ? storageUnits.reduce((sum, unit) => {
+        const minTemp = Number(unit.minTemp) || 0;
+        const maxTemp = Number(unit.maxTemp) || 0;
+        return sum + (minTemp + maxTemp) / 2;
+      }, 0) / storageUnits.length 
+    : 0;
+  
+  const avgHumidity = storageUnits.length > 0 
+    ? storageUnits.reduce((sum, unit) => {
+        const minHumidity = Number(unit.minHumidity) || 0;
+        const maxHumidity = Number(unit.maxHumidity) || 0;
+        return sum + (minHumidity + maxHumidity) / 2;
+      }, 0) / storageUnits.length 
+    : 0;
+
   return (
     <Paper sx={{ p: 3, mb: 4, background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)' }}>
       <Grid container spacing={3} alignItems="center">
@@ -42,31 +62,31 @@ const WarehouseHeader: React.FC<{ warehouse: Warehouse }> = ({ warehouse }) => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white' }}>
               <StorageIcon />
               <Typography variant="body1">
-                Total Units: {warehouse.totalUnits || 0}
+                Total Units: {totalUnits}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white' }}>
               <StorageIcon />
               <Typography variant="body1">
-                Available Units: {warehouse.availableUnits || 0}
+                Available Units: {availableUnits}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white' }}>
               <StorageIcon />
               <Typography variant="body1">
-                Occupancy Rate: {warehouse.occupancyRate || 0}%
+                Occupancy Rate: {occupancyRate.toFixed(1)}%
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white' }}>
               <StorageIcon />
               <Typography variant="body1">
-                Average Temperature: {warehouse.averageTemperature || 0}°C
+                Average Temperature: {avgTemperature.toFixed(1)}°C
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white' }}>
               <StorageIcon />
               <Typography variant="body1">
-                Average Humidity: {warehouse.averageHumidity || 0}%
+                Average Humidity: {avgHumidity.toFixed(1)}%
               </Typography>
             </Box>
             <Chip 
@@ -203,7 +223,7 @@ const WarehouseDetails: React.FC = () => {
 
   return (
     <Container>
-      <WarehouseHeader warehouse={warehouse} />
+      <WarehouseHeader warehouse={warehouse} storageUnits={storageUnits} />
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h5" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
