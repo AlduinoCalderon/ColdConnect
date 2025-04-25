@@ -22,9 +22,6 @@ import Bookings from './pages/Bookings';
 import Payments from './pages/Payments';
 import Users from './pages/Users';
 import Sensors from './pages/Sensors';
-import Maintenance from './pages/Maintenance';
-import Notifications from './pages/Notifications';
-import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import WarehouseDetails from './pages/WarehouseDetails';
@@ -52,9 +49,6 @@ const App: React.FC = () => {
             <Route path="/payments" element={<Payments />} />
             <Route path="/users" element={<Users />} />
             <Route path="/sensors" element={<Sensors />} />
-            <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>

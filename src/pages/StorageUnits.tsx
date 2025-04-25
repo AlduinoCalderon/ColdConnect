@@ -139,7 +139,7 @@ const StorageUnits: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={handleCreate}
         >
-          {t('Add Storage Unit')}
+          {t('common.addUnit')}
         </Button>
       </Box>
 

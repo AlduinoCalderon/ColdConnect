@@ -64,9 +64,6 @@ const navigationItems = [
   { path: '/payments', icon: <PaymentIcon />, translationKey: 'navigation.payments' },
   { path: '/users', icon: <UsersIcon />, translationKey: 'navigation.users' },
   { path: '/sensors', icon: <SensorsIcon />, translationKey: 'navigation.sensors' },
-  { path: '/maintenance', icon: <MaintenanceIcon />, translationKey: 'navigation.maintenance' },
-  { path: '/notifications', icon: <NotificationIcon />, translationKey: 'navigation.notifications' },
-  { path: '/reports', icon: <ReportsIcon />, translationKey: 'navigation.reports' },
   { path: '/settings', icon: <SettingsIcon />, translationKey: 'navigation.settings' },
   { path: '/profile', icon: <ProfileIcon />, translationKey: 'navigation.profile' },
 ];

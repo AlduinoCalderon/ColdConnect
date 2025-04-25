@@ -85,7 +85,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {initialData ? t('New Storage Unit') : t('Add New Storage Unit')}
+        {initialData ? t('storageUnit.edit') : t('storageUnit.add')}
       </DialogTitle>
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <DialogContent>
@@ -98,7 +98,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                 render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
-                    label={t('New Storage Unit Name')}
+                    label={t('storageUnit.name')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -115,7 +115,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     select
-                    label={t('Associated Warehouse')}
+                    label={t('warehouse.title')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -138,7 +138,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Storage Unit Width')}
+                    label={t('storageUnit.size')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -155,7 +155,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Storage Unit Height')}
+                    label={t('storageUnit.size')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -172,7 +172,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Storage Unit Depth')}
+                    label={t('storageUnit.size')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -192,7 +192,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Minimum Temperature')}
+                    label={t('storageUnit.temperature')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -212,7 +212,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Maximum Temperature')}
+                    label={t('storageUnit.temperature')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -232,7 +232,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Minimum Humidity')}
+                    label={t('storageUnit.humidity')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -252,7 +252,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Maximum Humidity')}
+                    label={t('storageUnit.humidity')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -269,7 +269,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     type="number"
-                    label={t('Cost Per Hour')}
+                    label={t('storageUnit.cost')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -286,7 +286,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
                   <TextField
                     {...field}
                     select
-                    label={t('Storage Unit Status')}
+                    label={t('storageUnit.status')}
                     fullWidth
                     error={!!error}
                     helperText={error?.message}
@@ -303,7 +303,7 @@ const StorageUnitForm: React.FC<StorageUnitFormProps> = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{t('Cancel')}</Button>
+          <Button onClick={handleClose}>{t('common.close')}</Button>
           <Button type="submit" variant="contained" color="primary">
             {initialData ? t('common.save') : t('common.create')}
           </Button>

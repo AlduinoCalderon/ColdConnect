@@ -72,7 +72,7 @@ const Bookings: React.FC = () => {
         sx={{ mb: 2 }}
         color="primary"
       >
-        Add Booking
+        {t('common.addBooking')}
       </Button>
       <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>

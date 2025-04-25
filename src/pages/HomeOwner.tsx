@@ -98,7 +98,7 @@ const AddWarehouseCard: React.FC<{ onClick: () => void }> = ({ onClick }) => {
           <AddIcon sx={{ fontSize: 40 }} />
         </IconButton>
         <Typography variant="h6" color="text.secondary">
-          {t('common.add')} {t('warehouse.title')}
+          {t('warehouse.add')}
         </Typography>
       </CardContent>
     </Card>

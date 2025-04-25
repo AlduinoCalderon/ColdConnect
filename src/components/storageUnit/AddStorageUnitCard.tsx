@@ -6,12 +6,15 @@ import {
   IconButton,
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface AddStorageUnitCardProps {
   onClick: () => void;
 }
 
 const AddStorageUnitCard: React.FC<AddStorageUnitCardProps> = ({ onClick }) => {
+  const { t } = useTranslation();
+  
   return (
     <Card 
       sx={{ 
@@ -32,7 +35,7 @@ const AddStorageUnitCard: React.FC<AddStorageUnitCardProps> = ({ onClick }) => {
           <AddIcon sx={{ fontSize: 40 }} />
         </IconButton>
         <Typography variant="h6" color="text.secondary">
-          Add New Storage Unit
+          {t('storageUnit.add')}
         </Typography>
       </CardContent>
     </Card>
