@@ -131,7 +131,7 @@ const StorageUnits: React.FC = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">
-          {t('Storage Units')}
+          {t('storageUnit.title')}
         </Typography>
         <Button
           variant="contained"
@@ -139,7 +139,7 @@ const StorageUnits: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={handleCreate}
         >
-          {t('common.addUnit')}
+          {t('storageUnit.add')}
         </Button>
       </Box>
 
@@ -153,13 +153,13 @@ const StorageUnits: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: theme.palette.primary.main, color: theme.palette.common.white }}>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Unit Name')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Warehouse')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Dimensions')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Temperature')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Humidity')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Cost')}</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('Status')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.name')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('warehouse.title')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.size')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.temperature')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.humidity')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.cost')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }}>{t('storageUnit.status')}</TableCell>
               <TableCell sx={{ fontWeight: 'bold', color: theme.palette.common.white }} align="right">{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>

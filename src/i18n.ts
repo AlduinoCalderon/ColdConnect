@@ -27,6 +27,14 @@ export const resources = {
         reset: 'Reset',
         update: 'Update'
       },
+      storageUnit: {
+        title: 'Storage Units',
+        error: {
+          fetch: 'Error fetching storage units',
+          save: 'Error saving storage unit',
+          delete: 'Error deleting storage unit'
+        }
+      },
       tables: {
         name: 'Name',
         status: 'Status',
@@ -179,6 +187,14 @@ export const resources = {
         reset: 'Restablecer',
         update: 'Actualizar'
       },
+      storageUnit: {
+        title: 'Unidades de Almacenamiento',
+        error: {
+          fetch: 'Error al cargar las unidades de almacenamiento',
+          save: 'Error al guardar la unidad de almacenamiento',
+          delete: 'Error al eliminar la unidad de almacenamiento'
+        }
+      },
       tables: {
         name: 'Nombre',
         status: 'Estado',
@@ -330,6 +346,14 @@ export const resources = {
         clear: 'クリア',
         reset: 'リセット',
         update: '更新'
+      },
+      storageUnit: {
+        title: '保管ユニット',
+        error: {
+          fetch: '保管ユニットの取得中にエラーが発生しました',
+          save: '保管ユニットの保存中にエラーが発生しました',
+          delete: '保管ユニットの削除中にエラーが発生しました'
+        }
       },
       tables: {
         name: '名前',

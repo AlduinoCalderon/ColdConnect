@@ -34,30 +34,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleTheme } from '../../store/slices/themeSlice';
 import { RootState } from '../../store/store';
 
-const drawerWidth = '15rem'; // Use rem for responsive design
+const drawerWidth = '15rem';
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1, // Sidebar is always on top
+  '& .MuiDrawer-paper': {
+    width: drawerWidth,
+    marginTop: '64px', // Altura de la Navbar
+    height: 'calc(100% - 64px)', // Altura total menos la altura de la Navbar
+    boxSizing: 'border-box',
+    backgroundColor: theme.palette.background.paper,
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
 }));
 
 const MenuButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(2),
   color: theme.palette.primary.contrastText,
-  position: 'fixed', // This makes the button stay on the screen even while scrolling
-  top: 16, // Adjust as needed
-  left: 16, // Adjust as needed
-  zIndex: 1301, // Higher zIndex to ensure it's on top
+  position: 'fixed',
+  top: 16,
+  left: 16,
+  zIndex: 1301,
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  position: 'relative', // Ensures that the AppBar is correctly positioned
-  zIndex: theme.zIndex.drawer + 2, // Ensure it's below the menu button and above other elements
-  boxShadow: 'none', // Remove box shadow if not needed
+  position: 'fixed',
+  zIndex: theme.zIndex.drawer + 2,
+  boxShadow: 'none',
 }));
 
 const navigationItems = [
-  { path: '/', icon: <HomeIcon />, translationKey: 'navigation.homeOwner' },
-  { path: '/home', icon: <HomeIcon />, translationKey: 'navigation.home' },
+  { path: '/', icon: <HomeIcon />, translationKey: 'navigation.home' },
   { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'navigation.warehouses' },
   { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'navigation.storageUnits' },
   { path: '/bookings', icon: <BookingIcon />, translationKey: 'navigation.bookings' },
@@ -68,7 +74,6 @@ const navigationItems = [
   { path: '/profile', icon: <ProfileIcon />, translationKey: 'navigation.profile' },
 ];
 
-//comentario para hacer merge
 const Sidebar: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
