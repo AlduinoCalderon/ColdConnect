@@ -53,24 +53,47 @@ const StorageUnitDetails: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         {t('Storage Unit Details')}
       </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">{t('Unit Name')}: {storageUnit.name}</Typography>
-          <Typography variant="body1">{t('Dimensions')}: {storageUnit.width}m × {storageUnit.height}m × {storageUnit.depth}m</Typography>
-          <Typography variant="body1">{t('Temperature')}: {storageUnit.minTemp}°C - {storageUnit.maxTemp}°C</Typography>
-          <Typography variant="body1">{t('Humidity')}: {storageUnit.minHumidity}% - {storageUnit.maxHumidity}%</Typography>
-          <Typography variant="body1">{t('Cost')}: ${storageUnit.costPerHour}/hr</Typography>
-          <Typography variant="body1">{t('Status')}: {storageUnit.status}</Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Box>
+            <Typography variant="h6">{t('Unit Name')}: {storageUnit.name}</Typography>
+            <Typography variant="body1">{t('Dimensions')}: {storageUnit.width}m × {storageUnit.height}m × {storageUnit.depth}m</Typography>
+            <Typography variant="body1">{t('Temperature')}: {storageUnit.minTemp}°C - {storageUnit.maxTemp}°C</Typography>
+            <Typography variant="body1">{t('Humidity')}: {storageUnit.minHumidity}% - {storageUnit.maxHumidity}%</Typography>
+            <Typography variant="body1">{t('Cost')}: ${storageUnit.costPerHour}/hr</Typography>
+            <Typography variant="body1">{t('Status')}: {storageUnit.status}</Typography>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Button variant="contained" color="primary" onClick={() => {/* Handle edit action */}}>
+              {t('Edit')}
+            </Button>
+            <Button variant="contained" color="error" onClick={() => {/* Handle delete action */}} sx={{ ml: 2 }}>
+              {t('Delete')}
+            </Button>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box sx={{ 
+            width: '100%', 
+            height: '400px', 
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            overflow: 'hidden'
+          }}>
+            <iframe
+              src="https://3dvisualizer-coral.vercel.app"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none'
+              }}
+              title="3D Storage Unit Visualizer"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </Box>
         </Grid>
       </Grid>
-      <Box sx={{ mt: 2 }}>
-        <Button variant="contained" color="primary" onClick={() => {/* Handle edit action */}}>
-          {t('Edit')}
-        </Button>
-        <Button variant="contained" color="error" onClick={() => {/* Handle delete action */}} sx={{ ml: 2 }}>
-          {t('Delete')}
-        </Button>
-      </Box>
     </Paper>
   );
 };

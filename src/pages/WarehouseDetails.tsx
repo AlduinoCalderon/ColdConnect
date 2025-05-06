@@ -225,6 +225,32 @@ const WarehouseDetails: React.FC = () => {
     <Container>
       <WarehouseHeader warehouse={warehouse} storageUnits={storageUnits} />
 
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h5" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <StorageIcon color="primary" />
+          3D Warehouse Visualization
+        </Typography>
+        <Box sx={{ 
+          width: '100%', 
+          height: '500px', 
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          overflow: 'hidden'
+        }}>
+          <iframe
+            src="https://3dvisualizer-coral.vercel.app"
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none'
+            }}
+            title="3D Warehouse Visualizer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </Box>
+      </Paper>
+
       <Box sx={{ mb: 4 }}>
         <Typography variant="h5" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <StorageIcon color="primary" />
