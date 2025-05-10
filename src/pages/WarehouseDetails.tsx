@@ -183,6 +183,60 @@ const WarehouseDetails: React.FC = () => {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    // Load the viewer script
+    const script = document.createElement('script');
+    script.src = 'https://3dvisualizer-coral.vercel.app/main.js';
+    script.async = true;
+    script.onload = () => {
+      // Initialize the viewer once the script is loaded
+      if (window.initShelfViewer) {
+        window.initShelfViewer('warehouse-viewer-container', {
+          width: '100%',
+          height: '500px',
+          models: [
+            { 
+              name: 'Estante', 
+              path: 'https://3dvisualizer-coral.vercel.app/models/Shelf.obj' 
+            }
+          ]
+        });
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Verificar el origen del mensaje por seguridad
+      if (event.origin !== "https://3dvisualizer-embedded.vercel.app") return;
+
+      const { type, data } = event.data;
+      
+      switch (type) {
+        case 'ready':
+          console.log('Visualizador listo');
+          break;
+        case 'sensorUpdate':
+          console.log('Actualización de sensor:', data);
+          break;
+        default:
+          console.log('Mensaje recibido:', event.data);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
   const handleAddStorageUnit = () => {
     setIsStorageUnitFormOpen(true);
   };
@@ -226,10 +280,6 @@ const WarehouseDetails: React.FC = () => {
       <WarehouseHeader warehouse={warehouse} storageUnits={storageUnits} />
 
       <Paper sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h5" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <StorageIcon color="primary" />
-          3D Warehouse Visualization
-        </Typography>
         <Box sx={{ 
           width: '100%', 
           height: '500px', 
@@ -238,7 +288,7 @@ const WarehouseDetails: React.FC = () => {
           overflow: 'hidden'
         }}>
           <iframe
-            src="https://3dvisualizer-coral.vercel.app"
+            src="https://3dvisualizer-embedded.vercel.app"
             style={{
               width: '100%',
               height: '100%',
@@ -247,6 +297,7 @@ const WarehouseDetails: React.FC = () => {
             title="3D Warehouse Visualizer"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           />
         </Box>
       </Paper>
