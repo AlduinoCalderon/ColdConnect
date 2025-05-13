@@ -1,3 +1,4 @@
+import api from './api';
 import { create, getAll, getById, update, remove } from './api';
 
 export interface Warehouse {
@@ -33,6 +34,25 @@ export interface Warehouse {
 }
 
 const WAREHOUSE_ENDPOINT = '/warehouses';
+
+interface Location {
+  latitude: number;
+  longitude: number;
+  maxDistanceKm?: number;
+}
+
+interface NearbyWarehouse {
+  id: number;
+  name: string;
+  address: string;
+  distance: number;
+  costPerHour: number | null;
+  availableUnits: number;
+  totalUnits: number;
+  status: string;
+  latitude: number;
+  longitude: number;
+}
 
 export const warehouseService = {
   getAll: async () => {
@@ -86,5 +106,15 @@ export const warehouseService = {
       console.error('Error deleting warehouse:', error);
       throw error;
     }
+  },
+  getNearby: async (location: Location): Promise<{ data: NearbyWarehouse[] }> => {
+    const response = await api.get(`/warehouses/nearby`, {
+      params: {
+        latitude: location.latitude,
+        longitude: location.longitude,
+        ...(location.maxDistanceKm ? { maxDistanceKm: location.maxDistanceKm } : {})
+      }
+    });
+    return { data: response.data };
   },
 }; 

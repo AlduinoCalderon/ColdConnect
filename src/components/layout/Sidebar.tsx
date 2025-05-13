@@ -27,6 +27,7 @@ import {
   Brightness4 as DarkModeIcon,
   Brightness7 as LightModeIcon,
   Language as LanguageIcon,
+  LocationOn as LocationIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -65,6 +66,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 const navigationItems = [
   { path: '/', icon: <HomeIcon />, translationKey: 'navigation.home' },
   { path: '/warehouses', icon: <WarehouseIcon />, translationKey: 'navigation.warehouses' },
+  { path: '/nearby-warehouses', icon: <LocationIcon />, translationKey: 'navigation.nearbyWarehouses' },
   { path: '/storage-units', icon: <StorageUnitIcon />, translationKey: 'navigation.storageUnits' },
   { path: '/bookings', icon: <BookingIcon />, translationKey: 'navigation.bookings' },
   { path: '/payments', icon: <PaymentIcon />, translationKey: 'navigation.payments' },

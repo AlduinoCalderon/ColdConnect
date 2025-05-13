@@ -25,6 +25,7 @@ import Sensors from './pages/Sensors';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import WarehouseDetails from './pages/WarehouseDetails';
+import NearbyWarehouses from './pages/NearbyWarehouses';
 
 const App: React.FC = () => {
   const themeMode = useSelector((state: RootState) => state.theme.mode);
@@ -51,6 +52,7 @@ const App: React.FC = () => {
             <Route path="/sensors" element={<Sensors />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/nearby-warehouses" element={<NearbyWarehouses />} />
           </Routes>
         </Layout>
       </Router>
